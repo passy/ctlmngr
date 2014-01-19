@@ -18,5 +18,8 @@
     "trailing": true,
     "smarttabs": true,
     "white": true,
-    "browser": true
+    "browser": true,
+    "globals": {
+        "define": false
+    }
 }

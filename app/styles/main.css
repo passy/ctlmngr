@@ -17,3 +17,15 @@
 .dim-full-width {
     width: 100%;
 }
+
+/* Custom Buttons */
+
+.image-btn {
+    border: none;
+}
+
+.cm-image-btn-sign-in {
+    width: 158px;
+    height: 28px;
+    background: transparent url(../images/signin.png) scroll no-repeat;
+}
