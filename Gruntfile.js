@@ -26,8 +26,24 @@ module.exports = function (grunt) {
                 files: [{
                     dot: true,
                     src: [
-                        '<%= yeoman.dist %>'
+                        '<%= yeoman.dist %>',
+                        '.tmp'
                     ]
+                }]
+            }
+        },
+
+        autoprefixer: {
+            options: {
+                browsers: ['last 1 version']
+            },
+
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    src: '{,*/}*.css',
+                    dest: '.tmp/'
                 }]
             }
         },
@@ -48,7 +64,7 @@ module.exports = function (grunt) {
 
         reduce: {
             // Source folder
-            root: '<%= yeoman.app %>',
+            root: '.tmp',
 
             // Build destination folder
             outRoot: '<%= yeoman.dist %>',
@@ -75,7 +91,7 @@ module.exports = function (grunt) {
 
             // Create a cache manifest file
             // If one already exists it will be ammended with static assets
-            manifest: false,
+            manifest: true,
 
             // Set the 'async'-attribute on all script tags
             asyncScripts: true,
@@ -111,14 +127,36 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{,**/}*.{html,css}'
+                    '<%= yeoman.app %>/{,**/}*.html',
+                    '.tmp/{,**/}*.{css}',
                 ]
+            },
+            css: {
+                files: [
+                    '<%= yeoman.app %>/{,**/}*.css',
+                ],
+                tasks: ['autoprefixer']
+            }
+        },
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '.tmp',
+                    src: [
+                        '{,**/}*'
+                    ]
+                }]
             }
         }
     });
 
     grunt.registerTask('build', [
         'clean:dist',
+        'copy:dist',
+        'autoprefixer',
         'reduce'
     ]);
 
@@ -127,5 +165,10 @@ module.exports = function (grunt) {
         'build'
     ]);
 
-    grunt.registerTask('serve', ['connect:livereload', 'watch']);
+    grunt.registerTask('serve', [
+        'clean:dist',
+        'autoprefixer',
+        'connect:livereload',
+        'watch'
+    ]);
 };

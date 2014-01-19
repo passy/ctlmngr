@@ -2,6 +2,8 @@ body {
     background: #fafafa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #333;
+
+    transition: all 1s ease-in;
 }
 
 .hero-unit {
