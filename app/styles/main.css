@@ -8,3 +8,12 @@
     padding-top: 9px;
     margin: 40px 0 20px;
 }
+
+/* Dimension helpers */
+.dim-half-width {
+    width: 50%;
+}
+
+.dim-full-width {
+    width: 100%;
+}
