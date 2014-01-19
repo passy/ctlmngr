@@ -3,7 +3,7 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var API = require('api');
+    var client = require('api').getDefaultInstance();
 
     return React.createClass({
         getInitialState: function () {
@@ -14,6 +14,8 @@ define(function (require) {
 
         handleLogin: function (e) {
             e.preventDefault();
+
+            client.login();
         },
 
         render: function () {

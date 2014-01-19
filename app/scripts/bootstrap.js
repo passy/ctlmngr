@@ -4,10 +4,9 @@ define(function (require) {
     var React = require('react');
 
     var API = require('api');
-    var Config = require('json!config.json');
     var CMApp = require('jsx!scripts/components/app.jsx?jsx');
 
-    var client = new API(Config.API_BASE);
+    var client = API.getDefaultInstance();
     var cmApp = new CMApp();
 
     client.getSession().then(function (session) {
