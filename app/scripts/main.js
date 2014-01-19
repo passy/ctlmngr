@@ -10,7 +10,14 @@
             'json': '../bower_components/requirejs-plugins/src/json',
             'react': '../bower_components/react/react-with-addons',
             'q': '../bower_components/q/q',
+            'lodash': '../bower_components/lodash/dist/lodash',
+            'underscore-string': '../bower_components/underscore.string/lib/underscore.string',
         }
+    });
+
+    require(['lodash', 'underscore-string'], function () {
+        // Automagically set up underscore-string which doesn't work correctly
+        // here...
     });
 
     require(['bootstrap'], function (bootstrap) {

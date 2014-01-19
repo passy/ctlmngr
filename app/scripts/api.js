@@ -3,6 +3,7 @@ define(function (require) {
 
     var Q = require('q');
     var Config = require('json!config.json');
+    var _ = require('lodash');
     var READY_STATE_DONE = 4;
     var client;
 
@@ -21,9 +22,19 @@ define(function (require) {
     Client.prototype.xhr = function (options) {
         var deferred = Q.defer();
         var xhr = new XMLHttpRequest();
+        var params = '';
 
         xhr.withCredentials = !!options.withCredentials;
-        xhr.open(options.method, options.url, true);
+
+        if (options.params) {
+            // Very simplistic, but should work for our limited use cases.
+            params = '?' + Object.keys(options.params || {}).map(function (key) {
+                return _.string.underscored(key) + '=' +
+                    encodeURIComponent(options.params[key]);
+            }).join('&');
+        }
+
+        xhr.open(options.method, options.url + params, true);
 
         Object.keys(options.headers || {}).forEach(function (key) {
             xhr.setRequestHeader(key, options.headers[key]);
@@ -50,12 +61,12 @@ define(function (require) {
         return deferred.promise;
     };
 
-    Client.prototype.request = function (url, method) {
-        return this.xhr({
+    Client.prototype.request = function (url, method, options) {
+        return this.xhr(_.extend({
             url: this.baseUrl + url,
             method: method || 'GET',
             withCredentials: true
-        }).then(function (xhr) {
+        }, options)).then(function (xhr) {
             try {
                 return JSON.parse(xhr.response);
             } catch (e) {
@@ -76,6 +87,12 @@ define(function (require) {
 
     Client.prototype.getSession = function () {
         return this.request('/');
+    };
+
+    Client.prototype.getCTLs = function (params) {
+        return this.request('/1.1/beta/timelines/custom/list.json', 'GET', {
+            params: params
+        });
     };
 
     return Client;
