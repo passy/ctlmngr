@@ -1,7 +1,9 @@
 {
   "name": "ctlmngr",
+  "description": "A manager for Twitter Custom Timelines",
   "version": "0.0.0",
   "dependencies": {
+    "react": "~0.8.0"
   },
   "devDependencies": {}
 }

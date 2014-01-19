@@ -15,7 +15,6 @@ module.exports = function (grunt) {
         // Project settings
         yeoman: {
             // Configurable paths
-            src: 'src',
             app: 'app',
             dist: 'dist',
             test: 'test'
@@ -88,6 +87,33 @@ module.exports = function (grunt) {
             // There will be an old IE fallback to the original image
             // 0 disables.
             inlineSize: 4096
+        },
+        connect: {
+            options: {
+                port: 9000,
+                livereload: 35729,
+                // Change this to '0.0.0.0' to access the server from outside
+                hostname: 'localhost'
+            },
+            livereload: {
+                options: {
+                    open: true,
+                    base: [
+                        '.tmp',
+                        '<%= yeoman.app %>'
+                    ]
+                }
+            }
+        },
+        watch: {
+            livereload: {
+                options: {
+                    livereload: '<%= connect.options.livereload %>'
+                },
+                files: [
+                    '<%= yeoman.app %>/{,**/}*.{html,css}'
+                ]
+            }
         }
     });
 
@@ -100,4 +126,6 @@ module.exports = function (grunt) {
         'newer:jshint',
         'build'
     ]);
+
+    grunt.registerTask('serve', ['connect:livereload', 'watch']);
 };
