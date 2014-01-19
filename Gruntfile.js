@@ -91,7 +91,7 @@ module.exports = function (grunt) {
 
             // Create a cache manifest file
             // If one already exists it will be ammended with static assets
-            manifest: true,
+            manifest: false,
 
             // Set the 'async'-attribute on all script tags
             asyncScripts: true,
@@ -127,7 +127,7 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
-                    '<%= yeoman.app %>/{,**/}*.html',
+                    '<%= yeoman.app %>/{,**/}*.{html,js,jsx}',
                     '.tmp/{,**/}*.{css}',
                 ]
             },

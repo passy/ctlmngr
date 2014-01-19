@@ -10,7 +10,7 @@
         }
     });
 
-    require(['jsx!./bootstrap'], function (bootstrap) {
+    require(['jsx!scripts/bootstrap.jsx?'], function (bootstrap) {
         bootstrap(document.querySelector('.js-cm-app'));
     });
 }(window.require));
