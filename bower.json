@@ -5,5 +5,7 @@
   "dependencies": {
     "react": "~0.8.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "components-bootstrap": "~3.0.3"
+  }
 }
