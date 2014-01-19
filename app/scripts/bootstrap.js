@@ -1,8 +1,10 @@
 /** @jsx React.DOM */
 /* global React */
 
-(function (window, React) {
+define(function (require) {
     'use strict';
+
+    var React = require('react');
 
     var CMApp = React.createClass({
         handleSubmit: function (e) {
@@ -22,5 +24,8 @@
             );
         }
     });
-    React.renderComponent(<CMApp />, document.querySelector('.js-cm-app'));
-}(this, React));
+
+    return function bootstrap(node) {
+        React.renderComponent(<CMApp />, node);
+    };
+});
