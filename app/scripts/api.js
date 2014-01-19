@@ -70,6 +70,10 @@ define(function (require) {
             encodeURIComponent(document.location.href);
     };
 
+    Client.prototype.logout = function () {
+        return this.request('/logout', 'POST');
+    };
+
     Client.prototype.getSession = function () {
         return this.request('/');
     };
