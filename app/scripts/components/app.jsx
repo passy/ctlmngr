@@ -31,12 +31,6 @@ define(function (require) {
     });
 
     var CMSelectCTLStep = React.createClass({
-        getInitialState: function () {
-            return {
-                url: 'http://hello'
-            };
-        },
-
         componentDidMount: function () {
             var that = this;
 
@@ -50,10 +44,11 @@ define(function (require) {
         handleSubmit: function (e) {
             e.preventDefault();
 
-            var id = 1337;
+            var url = this.refs.url.getDOMNode().value.trim();
+            // TODO: Find out ID
 
             mediator.publish('uiResolveCTL', {
-                id: id
+                id: url
             });
         },
 
@@ -67,7 +62,7 @@ define(function (require) {
                     <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
                         <h2>Step 1: Select a Custom Lineline</h2>
                         <div className="input-group">
-                            <input value={this.state.url} className="form-control" type="url" placeholder="Enter a Custom Timeline URL" />
+                            <input ref="url" className="form-control" type="url" placeholder="Enter a Custom Timeline URL" />
                             <span className="input-group-btn">
                                 <button className="btn btn-default" type="submit">Go!</button>
                             </span>

@@ -11,9 +11,9 @@ define(function (require) {
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
     };
 
-    DataBridge.prototype.resolveCTL = function (id) {
+    DataBridge.prototype.resolveCTL = function (data) {
         this.mediator.publish('dataResolveCTL', {
-            promise: Q({ hello: 'world' })
+            promise: Q({ hello: data.id })
         });
     };
 
