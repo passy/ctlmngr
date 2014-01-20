@@ -5,6 +5,8 @@ define(function (require) {
 
     var API = require('api');
     var CMApp = require('jsx!scripts/components/app.jsx?jsx');
+    var DataBridge = require('data_bridge');
+    var mediator = require('mediator');
 
     var client = API.getDefaultInstance();
     var cmApp = new CMApp();
@@ -25,6 +27,10 @@ define(function (require) {
     }
 
     function loadCTLs() {
+        if (!userSession) {
+            return;
+        }
+
         client.getCTLs({
             userId: userSession.user_id,
             includeCards: true,
@@ -37,6 +43,9 @@ define(function (require) {
     }
 
     return function bootstrap(node) {
+        var dataBridge = new DataBridge(mediator);
+        dataBridge.listen();
+
         start().then(loadCTLs).done();
         React.renderComponent(cmApp, node);
     };

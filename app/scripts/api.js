@@ -4,6 +4,7 @@ define(function (require) {
     var Q = require('q');
     var Config = require('json!config.json');
     var _ = require('lodash');
+
     var READY_STATE_DONE = 4;
     var client;
 
