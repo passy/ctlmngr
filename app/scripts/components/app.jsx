@@ -62,7 +62,7 @@ define(function (require) {
         },
 
         handleResolve: function (ctl) {
-            console.log('CTL resolved: ', ctl);
+            this.props.onSelect(ctl);
         },
 
         resolveCTL: function (url) {
@@ -101,6 +101,24 @@ define(function (require) {
         }
     });
 
+    var CMTimelineStep = React.createClass({
+        render: function () {
+            if (!this.props.timeline) {
+                return <div></div>;
+
+            } else {
+                return (
+                    <section className="center-block dim-half-width">
+                        <h2>Step 2: Reorder your Tweets</h2>
+                        <div>
+                            <pre>{JSON.stringify(this.props.timeline.objects, '  ')}</pre>
+                        </div>
+                    </section>
+                );
+            }
+        }
+    });
+
     return React.createClass({
         getInitialState: function () {
             return {
@@ -121,13 +139,10 @@ define(function (require) {
             });
         },
 
-        handleSubmit: function (e) {
-            e.preventDefault();
-            console.log('Submitted.', e);
-        },
-
-        handleSelect: function (e) {
-            console.log('CTL selected:', e);
+        handleSelect: function (ctl) {
+            this.setState({
+                timeline: ctl
+            });
         },
 
         handleLogout: function () {
@@ -143,7 +158,8 @@ define(function (require) {
                     <div className="pull-right">
                         <button className="btn btn-default btn-xs" onClick={this.handleLogout}>Logout</button>
                     </div>
-                    <CMSelectCTLStep timelines={this.state.timelines} />
+                    <CMSelectCTLStep timelines={this.state.timelines} onSelect={this.handleSelect} />
+                    <CMTimelineStep timeline={this.state.timeline} />
                 </div>
                 );
             } else {
