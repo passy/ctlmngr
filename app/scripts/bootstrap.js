@@ -33,9 +33,7 @@ define(function (require) {
 
         client.getCTLs({
             userId: userSession.user_id,
-            includeCards: true,
-            includeEntities: true,
-            sendErrorCodes: true,
+            sendErrorCodes: true
         }).then(function (response) {
             var timelines = (response && response.objects.timelines) || {};
             cmApp.setTimelines(timelines);
@@ -48,5 +46,14 @@ define(function (require) {
 
         start().then(loadCTLs).done();
         React.renderComponent(cmApp, node);
+
+        mediator.subscribe('dataError', function (e) {
+            console.error('Data error:', e);
+            try {
+                window.alert('Data Error: ' + JSON.stringify(e));
+            } catch (e) {
+                window.alert('Unrecoverable data error.');
+            }
+        });
     };
 });

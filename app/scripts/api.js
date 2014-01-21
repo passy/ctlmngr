@@ -96,5 +96,14 @@ define(function (require) {
         });
     };
 
+    // https://api.twitter.com/1.1/beta/timelines/timeline.json?id=custom-41142710…clude_entities=1&include_user_entities=1&include_cards=1&send_error_codes=
+    Client.prototype.getCTL = function (id, params) {
+        return this.request('/1.1/beta/timelines/timeline.json', 'GET', {
+            params: _.extend({
+                id: (_.string.startsWith(id, 'custom-')) ? id : 'custom-' + id
+            }, params)
+        });
+    };
+
     return Client;
 });

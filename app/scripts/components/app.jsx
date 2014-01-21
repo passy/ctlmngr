@@ -10,16 +10,16 @@ define(function (require) {
     var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
 
     var CMCTLList = React.createClass({
-        handleSelect: function (ctl, e) {
+        handleSelect: function (ctlKey, ctl, e) {
             e.preventDefault();
-            this.props.onSelect(ctl);
+            this.props.onSelect(ctlKey, ctl);
         },
 
         renderCTLSelector: function (ctlKey) {
             var ctl = this.props.timelines[ctlKey];
             // TODO: Make this a button.
             return <li key={ctlKey}>
-                <a href={ctl.custom_timeline_url} onClick={this.handleSelect.bind(null, ctl)}>
+                <a href={ctl.custom_timeline_url} onClick={this.handleSelect.bind(null, ctlKey, ctl)}>
                     {ctl.name} ({ctl.description})
                 </a>
             </li>;
@@ -44,9 +44,7 @@ define(function (require) {
             var that = this;
 
             mediator.subscribe('dataResolveCTL', function (data) {
-                data.promise.then(function (ctl) {
-                    that.handleSelect(ctl);
-                }).done();
+                that.handleResolve(data.ctl);
             });
         },
 
@@ -54,10 +52,25 @@ define(function (require) {
             e.preventDefault();
 
             var url = this.refs.url.getDOMNode().value.trim();
+            resolveCTL(url);
+        },
+
+        handleSelect: function (ctlKey) {
+            mediator.publish('uiResolveCTL', {
+                id: ctlKey
+            });
+        },
+
+        handleResolve: function (ctl) {
+            console.log('CTL resolved: ', ctl);
+        },
+
+        resolveCTL: function (url) {
             var matches = url.match(CTL_RE);
             var id = (matches || [])[1];
 
             if (!id) {
+                // TODO
                 var msg = 'Invalid URL. I should better handle this error ...';
                 alert(msg);
                 throw new Error(msg);
@@ -66,10 +79,6 @@ define(function (require) {
             mediator.publish('uiResolveCTL', {
                 id: id
             });
-        },
-
-        handleSelect: function (ctl) {
-             console.log('onSelect: ', ctl);
         },
 
         render: function () {

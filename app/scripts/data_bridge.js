@@ -1,7 +1,8 @@
+/*jshint camelcase:false */
 define(function (require) {
     'use strict';
 
-    var Q = require('q');
+    var client = require('api').getDefaultInstance();
 
     function DataBridge(mediator) {
         this.mediator = mediator;
@@ -12,9 +13,22 @@ define(function (require) {
     };
 
     DataBridge.prototype.resolveCTL = function (data) {
-        this.mediator.publish('dataResolveCTL', {
-            promise: Q({ hello: data.id })
-        });
+        client.getCTL(data.id, {
+            include_cards: 1,
+            send_error_codes: 1,
+            include_entites: 1
+        }).then(function (response) {
+            this.mediator.publish('dataResolveCTL', {
+                ctl: response
+            });
+        }.bind(this), function (e) {
+            this.mediator.publish('dataError', {
+                method: 'resolveCTL',
+                status: e.status,
+                message: 'Resolving CLT failed.',
+                data: data
+            });
+        }.bind(this)).done();
     };
 
     return DataBridge;
