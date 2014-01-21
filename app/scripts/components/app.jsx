@@ -3,9 +3,11 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
+    var URL = require('url');
     var client = require('api').getDefaultInstance();
     var mediator = require('mediator');
+
+    var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
 
     var CMCTLList = React.createClass({
         handleSelect: function (ctl, e) {
@@ -51,11 +53,18 @@ define(function (require) {
         handleSubmit: function (e) {
             e.preventDefault();
 
-            var url = this.refs.url.getDOMNode().value.trim();
-            // TODO: Find out ID
+            var url = new URL(this.refs.url.getDOMNode().value.trim());
+            var parts = url.pathname.split('/');
+            var id = parseInt(parts[parts.length - 1], 10);
+
+            if (!id) {
+                var msg = 'Invalid URL. I should better handle this error ...';
+                alert(msg);
+                throw new Error(msg);
+            }
 
             mediator.publish('uiResolveCTL', {
-                id: url
+                id: id
             });
         },
 
