@@ -8,11 +8,18 @@ define(function (require) {
     var mediator = require('mediator');
 
     var CMCTLList = React.createClass({
+        handleSelect: function (ctl, e) {
+            e.preventDefault();
+            this.props.onSelect(ctl);
+        },
+
         renderCTLSelector: function (ctlKey) {
             var ctl = this.props.timelines[ctlKey];
             // TODO: Make this a button.
             return <li key={ctlKey}>
-                <a href="#">{ctl.name} ({ctl.description})</a>
+                <a href={ctl.custom_timeline_url} onClick={this.handleSelect.bind(null, ctl)}>
+                    {ctl.name} ({ctl.description})
+                </a>
             </li>;
         },
 
