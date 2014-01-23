@@ -76,8 +76,8 @@ module.exports = function (grunt) {
             // Dependencies of these will be automatically populated
             // Paths are relative to reduce.root
             include: [
-                '**/*.html',
-                '**/.htaccess',
+                '*.html',
+                '.htaccess',
                 '*.txt',
                 '*.ico'
             ],
