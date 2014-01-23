@@ -12,6 +12,7 @@
     "lodash": "~2.4.1",
     "underscore.string": "~2.3.3",
     "components-bootstrap": "~3.0.3",
-    "mediator-js": "~0.9.6"
+    "mediator-js": "~0.9.6",
+    "prefixfree": "*"
   }
 }
