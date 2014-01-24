@@ -26,24 +26,8 @@ module.exports = function (grunt) {
                 files: [{
                     dot: true,
                     src: [
-                        '<%= yeoman.dist %>',
-                        '.tmp'
+                        '<%= yeoman.dist %>'
                     ]
-                }]
-            }
-        },
-
-        autoprefixer: {
-            options: {
-                browsers: ['last 1 version']
-            },
-
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>',
-                    src: '{,*/}*.css',
-                    dest: '.tmp/'
                 }]
             }
         },
@@ -64,7 +48,7 @@ module.exports = function (grunt) {
 
         reduce: {
             // Source folder
-            root: '.tmp',
+            root: 'app',
 
             // Build destination folder
             outRoot: '<%= yeoman.dist %>',
@@ -76,10 +60,17 @@ module.exports = function (grunt) {
             // Dependencies of these will be automatically populated
             // Paths are relative to reduce.root
             include: [
-                '**/*.html',
-                '**/.htaccess',
+                '*.html',
+                '.htaccess',
                 '*.txt',
                 '*.ico'
+            ],
+
+            // Browser support configuration to send to autoprefixer.
+            // If any value is set, any `prefixfree.js` script reference will also be removed
+            // Browser support syntax documentation: https://github.com/ai/autoprefixer#browsers
+            autoprefix: [
+                'last 1 version'
             ],
 
             // Compile less files and remove less.js from application
@@ -115,7 +106,6 @@ module.exports = function (grunt) {
                 options: {
                     open: true,
                     base: [
-                        '.tmp',
                         '<%= yeoman.app %>'
                     ]
                 }
@@ -128,38 +118,14 @@ module.exports = function (grunt) {
                 },
                 files: [
                     '<%= yeoman.app %>/{,**/}*.{html,js,jsx}',
-                    '.tmp/{,**/}*.{css}',
+                    '<%= yeoman.app %>/{,**/}*.css'
                 ]
-            },
-            css: {
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                },
-                files: [
-                    '<%= yeoman.app %>/{,**/}*.css',
-                ],
-                tasks: ['autoprefixer']
-            }
-        },
-        copy: {
-            dist: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>',
-                    dest: '.tmp',
-                    src: [
-                        '{,**/}*'
-                    ]
-                }]
             }
         }
     });
 
     grunt.registerTask('build', [
         'clean:dist',
-        'copy:dist',
-        'autoprefixer',
         'reduce'
     ]);
 
@@ -170,7 +136,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('serve', [
         'clean:dist',
-        'autoprefixer',
         'connect:livereload',
         'watch'
     ]);
