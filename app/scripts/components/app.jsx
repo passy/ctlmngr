@@ -13,6 +13,7 @@ define(function (require) {
 
     var CMTweet = React.createClass({
         render: function () {
+            // Make sure to follow display guidelines here.
             return <blockquote>
                 {this.props.tweet.text}
             </blockquote>;
@@ -61,6 +62,7 @@ define(function (require) {
         },
 
         handleSelect: function (ctl) {
+            // TODO: I think this should go through a URL change.
             this.setState({
                 timeline: ctl
             });
