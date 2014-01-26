@@ -11,18 +11,29 @@ define(function (require) {
 
     var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
 
+    var CMTweet = React.createClass({
+        render: function () {
+            return <blockquote>
+                {this.props.tweet.text}
+            </blockquote>;
+        }
+    });
+
     var CMTimelineStep = React.createClass({
+        renderTweet: function (key) {
+            var tweet = this.props.timeline.objects.tweets[key];
+            return <CMTweet tweet={tweet} />;
+        },
         render: function () {
             if (!this.props.timeline) {
                 return <div></div>;
-
             } else {
                 return (
                     <section className="center-block dim-half-width">
                         <h2>Step 2: Reorder your Tweets</h2>
-                        <div>
-                            <pre>{JSON.stringify(this.props.timeline.objects, '  ')}</pre>
-                        </div>
+                        <ul className="list-unstyled">
+                            {Object.keys(this.props.timeline.objects.tweets).map(this.renderTweet)}
+                        </ul>
                     </section>
                 );
             }
