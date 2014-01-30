@@ -14,16 +14,16 @@ define(function (require) {
     var CMTweet = React.createClass({
         render: function () {
             // Make sure to follow display guidelines here.
-            return <blockquote>
-                {this.props.tweet.text}
-            </blockquote>;
+            return <div className="draggable">
+                <blockquote>{this.props.tweet.text}</blockquote>
+            </div>;
         }
     });
 
     var CMTimelineStep = React.createClass({
         renderTweet: function (key) {
             var tweet = this.props.timeline.objects.tweets[key];
-            return <CMTweet tweet={tweet} />;
+            return <CMTweet key={key} tweet={tweet} />;
         },
         render: function () {
             if (!this.props.timeline) {
@@ -45,7 +45,8 @@ define(function (require) {
         getInitialState: function () {
             return {
                 session: null,
-                timelines: {}
+                timelines: {},
+                timeline: null
             };
         },
 
