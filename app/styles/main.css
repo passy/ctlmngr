@@ -1,3 +1,12 @@
+/* Attribute overrides */
+
+[draggable] {
+    /* Prevent the text contents of draggable elements from being selectable. */
+    user-select: none;
+}
+
+/* Text styles */
+
 .txt-em--love {
     /* Sugar Hearts You http://www.colourlovers.com/palette/629637/(%E2%97%95%E3%80%9D%E2%97%95) */
     color: #FE4365;
@@ -46,4 +55,10 @@
     width: 158px;
     height: 28px;
     background: transparent url(../images/signin.png) scroll no-repeat;
+}
+
+/* Drag and Drop */
+
+.dnd__item--dragged {
+    opacity: .4;
 }

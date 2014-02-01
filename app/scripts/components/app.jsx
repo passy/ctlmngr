@@ -3,10 +3,9 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var Sortable = window.Sortable = require('Sortable');
+    var classSet = React.addons.classSet;
     var client = require('api').getDefaultInstance();
     var mediator = require('mediator');
-
 
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
@@ -14,35 +13,51 @@ define(function (require) {
     var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
 
     var SortableList = React.createClass({
+        getInitialState: function () {
+            return {
+                dragged: null
+            };
+        },
+
         render: function () {
             return <ul className="list-unstyled">
                 {this.renderPlaceholders()}
             </ul>;
         },
-        componentDidMount: function () {
-            this.renderItems();
-            new Sortable(this.getDOMNode());
-        },
-        componentDidUpdate: function () {
-        },
-        renderItems: function () {
-            this.props.children.forEach(function (child) {
-                React.renderComponent(child,
-                                      this.refs[child.props.key].getDOMNode());
-            }.bind(this));
-        },
+
         renderPlaceholders: function () {
             return this.props.children.map(function (child) {
-                if (!child.props.key) {
+                var key = child.props.key;
+
+                if (!key) {
                     throw new Error('SortableItem children must have a key!');
                 }
-                return <li key={child.props.key} ref={child.props.key} />;
+
+                var classes = classSet({
+                    'dnd__item--dragged': this.state.dragged === key
+                });
+
+                return <li
+                    draggable
+                    className={classes}
+                    onDragStart={this.handleDragStart.bind(this, key)}
+                    onDragEnd={this.handleDragEnd.bind(this, key)}
+                    key={key}>
+                    {child}
+                </li>;
+            }.bind(this));
+        },
+
+        handleDragStart: function (key) {
+            console.log('Setting key to', key);
+            this.setState({
+                dragged: key
             });
         },
-        componentWillUnmount: function () {
-            this.props.children.forEach(function (child) {
-                React.unmountAndReleaseReactRootNode(
-                    this.refs[child.props.key].getDOMNode());
+
+        handleDragEnd: function (key) {
+            this.setState({
+                dragged: null
             });
         }
     });
@@ -50,7 +65,7 @@ define(function (require) {
     var CMTweet = React.createClass({
         render: function () {
             // Make sure to follow display guidelines here.
-            return <div className="draggable">
+            return <div>
                 <blockquote>{this.props.tweet.text}</blockquote>
             </div>;
         }
