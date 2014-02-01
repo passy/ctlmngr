@@ -13,6 +13,7 @@
     "underscore.string": "~2.3.3",
     "components-bootstrap": "~3.0.3",
     "mediator-js": "~0.9.6",
-    "prefixfree": "*"
+    "prefixfree": "*",
+    "Sortable": "~0.1.5"
   }
 }

@@ -11,6 +11,20 @@ define(function (require) {
 
     var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
 
+    var SortableList = React.createClass({
+        render: function () {
+            return <ul className="list-unstyled">
+                {this.props.children}
+            </ul>;
+        },
+        componentDidMount: function () {
+            this.renderItems();
+        },
+        componentDidUpdate: function () {
+            this.renderItems();
+        }
+    });
+
     var CMTweet = React.createClass({
         render: function () {
             // Make sure to follow display guidelines here.
@@ -32,9 +46,9 @@ define(function (require) {
                 return (
                     <section className="center-block dim-half-width">
                         <h2>Step 2: Reorder your Tweets</h2>
-                        <ul className="list-unstyled">
+                        <SortableList>
                             {Object.keys(this.props.timeline.objects.tweets).map(this.renderTweet)}
-                        </ul>
+                        </SortableList>
                     </section>
                 );
             }
