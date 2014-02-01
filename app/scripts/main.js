@@ -13,7 +13,7 @@
             'lodash': '../bower_components/lodash/dist/lodash',
             'underscore.string': '../bower_components/underscore.string/lib/underscore.string',
             'mediator-js': '../bower_components/mediator-js/lib/mediator',
-            'sortable': '../bower_components/Sortable/Sortable'
+            'Sortable': '../bower_components/Sortable/Sortable'
         }
     });
 

@@ -3,8 +3,10 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
+    var Sortable = window.Sortable = require('Sortable');
     var client = require('api').getDefaultInstance();
     var mediator = require('mediator');
+
 
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
@@ -14,14 +16,34 @@ define(function (require) {
     var SortableList = React.createClass({
         render: function () {
             return <ul className="list-unstyled">
-                {this.props.children}
+                {this.renderPlaceholders()}
             </ul>;
         },
         componentDidMount: function () {
             this.renderItems();
+            new Sortable(this.getDOMNode());
         },
         componentDidUpdate: function () {
-            this.renderItems();
+        },
+        renderItems: function () {
+            this.props.children.forEach(function (child) {
+                React.renderComponent(child,
+                                      this.refs[child.props.key].getDOMNode());
+            }.bind(this));
+        },
+        renderPlaceholders: function () {
+            return this.props.children.map(function (child) {
+                if (!child.props.key) {
+                    throw new Error('SortableItem children must have a key!');
+                }
+                return <li key={child.props.key} ref={child.props.key} />;
+            });
+        },
+        componentWillUnmount: function () {
+            this.props.children.forEach(function (child) {
+                React.unmountAndReleaseReactRootNode(
+                    this.refs[child.props.key].getDOMNode());
+            });
         }
     });
 
@@ -46,7 +68,7 @@ define(function (require) {
                 return (
                     <section className="center-block dim-half-width">
                         <h2>Step 2: Reorder your Tweets</h2>
-                        <SortableList>
+                        <SortableList ref="list">
                             {Object.keys(this.props.timeline.objects.tweets).map(this.renderTweet)}
                         </SortableList>
                     </section>
