@@ -6,6 +6,7 @@ define(function (require) {
     var classSet = React.addons.classSet;
     var client = require('api').getDefaultInstance();
     var mediator = require('mediator');
+    var _ = require('lodash');
 
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
@@ -26,7 +27,7 @@ define(function (require) {
         },
 
         renderPlaceholders: function () {
-            return this.props.children.map(function (child) {
+            return this.props.items.map(function (item) {
                 var key = child.props.key;
 
                 if (!key) {
@@ -43,7 +44,7 @@ define(function (require) {
                     onDragStart={this.handleDragStart.bind(this, key)}
                     onDragEnd={this.handleDragEnd.bind(this, key)}
                     key={key}>
-                    {child}
+                    {this.props.renderItem(item)}
                 </li>;
             }.bind(this));
         },
@@ -76,15 +77,24 @@ define(function (require) {
             var tweet = this.props.timeline.objects.tweets[key];
             return <CMTweet key={key} tweet={tweet} />;
         },
+        handleSort: function (items) {
+            console.log('Resorted items:', items);
+        },
         render: function () {
             if (!this.props.timeline) {
                 return <div></div>;
             } else {
+                var tweets = Object.keys(this.props.timeline.objects.tweets).map(function (key) {
+                    return _.extend({ key: key },
+                                    this.props.timeline.objects.tweets[key]);
+                }.bind(this));
                 return (
                     <section className="center-block dim-half-width">
                         <h2>Step 2: Reorder your Tweets</h2>
-                        <SortableList ref="list">
-                            {Object.keys(this.props.timeline.objects.tweets).map(this.renderTweet)}
+                        <SortableList ref="list"
+                            items={tweets}
+                            renderItem={this.renderTweet}
+                            onSort={this.handleSort}>
                         </SortableList>
                     </section>
                 );
