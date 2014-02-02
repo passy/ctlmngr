@@ -3,6 +3,7 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
+    var classSet = React.addons.classSet;
     var client = require('api').getDefaultInstance();
     var _ = require('lodash');
 
@@ -10,22 +11,69 @@ define(function (require) {
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
     var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
 
+    var ProgressBar = React.createClass({
+        render: function () {
+            var perc = ~~(this.props.value /
+                          (this.props.max - this.props.min) * 100) + '%';
+
+            return <div className="progress progress-striped active">
+                <div className="progress-bar" role="progressbar"
+                    aria-valuenow={this.props.value}
+                    aria-valuemin={this.props.min}
+                    aria-valuemac={this.props.max}
+                    style={{ width: perc }}>
+                    <span className="sr-only">{perc + ' complete'}</span>
+                </div>
+            </div>;
+        }
+    });
+
     var CMSaveStep = React.createClass({
+        getInitialState: function () {
+            return {
+                saving: false
+            };
+        },
+
         handleSubmit: function (e) {
             e.preventDefault();
 
             console.log('Would be saving these tweets now:', this.props.tweets.map(function (x) { return x.text; }));
+
+            this.setState({
+                saving: true
+            });
         },
+
+        renderProgress: function () {
+            if (!this.state.saving) {
+                // XXX: Is there a better pattern for this?
+                return <div />;
+            }
+
+            return <ProgressBar className="l-marg-v-n"
+                min="0"
+                max="100"
+                value="50" />;
+        },
+
         render: function () {
             // TODO: Description and option to overwrite existing
             if (!this.props.timeline) {
                 return <div />;
             }
 
+            var innerFormClasses = classSet({
+                's-disabled': this.state.saving
+            });
+
             return (
                 <section className="clearfix">
                     <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
                         <h2>Step 3: Save your Custom Timeline</h2>
+
+                        {this.renderProgress()}
+                        <div className={innerFormClasses}>
                         <div className="input-group l-marg-b-n">
                             <label className="radio-inline">
                                 <input ref="saveType" name="saveType" type="radio" checked />Create New
@@ -39,6 +87,7 @@ define(function (require) {
                             <span className="input-group-btn">
                                 <button className="btn btn-default" type="submit">Save</button>
                             </span>
+                        </div>
                         </div>
                     </form>
                 </section>
