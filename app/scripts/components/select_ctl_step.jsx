@@ -5,6 +5,7 @@ define(function (require) {
     var React = require('react');
     var mediator = require('mediator');
     var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
+    var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
 
     return React.createClass({
         componentDidMount: function () {

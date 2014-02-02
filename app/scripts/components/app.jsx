@@ -5,61 +5,93 @@ define(function (require) {
     var React = require('react');
     var classSet = React.addons.classSet;
     var client = require('api').getDefaultInstance();
-    var mediator = require('mediator');
     var _ = require('lodash');
 
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
 
-    var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
-
     var SortableList = React.createClass({
         getInitialState: function () {
             return {
-                dragged: null
+                dragged: -1,
+                placeholder: -1
             };
         },
 
         render: function () {
             return <ul className="list-unstyled">
-                {this.renderPlaceholders()}
+                {this.renderItems()}
             </ul>;
         },
 
-        renderPlaceholders: function () {
-            return this.props.items.map(function (item) {
-                var key = child.props.key;
+        renderItems: function () {
+            return this.props.items.map(function (item, i) {
+                var key = item.key;
 
                 if (!key) {
-                    throw new Error('SortableItem children must have a key!');
+                    throw new Error('SortableItem items must have a key!');
                 }
 
                 var classes = classSet({
-                    'dnd__item--dragged': this.state.dragged === key
+                    'dnd__item--placeholder': this.state.placeholder === i
                 });
 
                 return <li
                     draggable
                     className={classes}
-                    onDragStart={this.handleDragStart.bind(this, key)}
-                    onDragEnd={this.handleDragEnd.bind(this, key)}
+                    onDragStart={this.handleDragStart.bind(this, i)}
+                    onDragEnd={this.handleDragEnd.bind(this, i)}
+                    onDragOver={this.handleDragOver.bind(this, i)}
                     key={key}>
                     {this.props.renderItem(item)}
                 </li>;
             }.bind(this));
         },
 
-        handleDragStart: function (key) {
-            console.log('Setting key to', key);
+        handleDragStart: function (i) {
             this.setState({
-                dragged: key
+                dragged: i,
+                placeholder: i
             });
         },
 
-        handleDragEnd: function (key) {
+        handleDragEnd: function () {
             this.setState({
-                dragged: null
+                dragged: -1,
+                placeholder: -1
             });
+
+        },
+
+        handleDragOver: function (i, e) {
+            // Allows us to drop
+            e.preventDefault();
+
+            var dragged = this.state.dragged;
+            var items = this.swapItems(dragged, i);
+
+            this.setState({
+                placeholder: i,
+                dragged: i,
+            });
+
+            this.props.onSort(items);
+        },
+
+        swapItems: function (a, b) {
+            // Could copy, but doesn't matter.
+            var items = this.props.items.slice(0);
+
+            if (a < 0 || b < 0) {
+                console.warn('invalid state');
+                return items;
+            }
+
+            var tmp = items[a];
+            items[a] = items[b];
+            items[b] = tmp;
+
+            return items;
         }
     });
 
@@ -73,28 +105,20 @@ define(function (require) {
     });
 
     var CMTimelineStep = React.createClass({
-        renderTweet: function (key) {
-            var tweet = this.props.timeline.objects.tweets[key];
-            return <CMTweet key={key} tweet={tweet} />;
-        },
-        handleSort: function (items) {
-            console.log('Resorted items:', items);
+        renderTweet: function (tweet) {
+            return <CMTweet tweet={tweet} />;
         },
         render: function () {
             if (!this.props.timeline) {
                 return <div></div>;
             } else {
-                var tweets = Object.keys(this.props.timeline.objects.tweets).map(function (key) {
-                    return _.extend({ key: key },
-                                    this.props.timeline.objects.tweets[key]);
-                }.bind(this));
                 return (
                     <section className="center-block dim-half-width">
                         <h2>Step 2: Reorder your Tweets</h2>
-                        <SortableList ref="list"
-                            items={tweets}
+                        <SortableList
+                            items={this.props.tweets}
                             renderItem={this.renderTweet}
-                            onSort={this.handleSort}>
+                            onSort={this.props.onSort}>
                         </SortableList>
                     </section>
                 );
@@ -107,7 +131,12 @@ define(function (require) {
             return {
                 session: null,
                 timelines: {},
-                timeline: null
+                // Selected timeline we want to mess with
+                timeline: null,
+                // We keep tweets separately, even though they are part of the
+                // timeline, because we manipulate those a lot and want to store
+                // them in a different format.
+                tweets: []
             };
         },
 
@@ -125,8 +154,13 @@ define(function (require) {
 
         handleSelect: function (ctl) {
             // TODO: I think this should go through a URL change.
+
+            var tweets = Object.keys(ctl.objects.tweets).map(function (key) {
+                return _.assign({ key: key }, ctl.objects.tweets[key]);
+            });
             this.setState({
-                timeline: ctl
+                timeline: ctl,
+                tweets: tweets
             });
         },
 
@@ -136,7 +170,14 @@ define(function (require) {
             }.bind(this));
         },
 
+        handleSort: function (sortedItems) {
+            this.setState({
+                tweets: sortedItems
+            });
+        },
+
         render: function () {
+            /*jshint camelcase:false */
             if (this.state.session) {
                 return (
                 <div className="cm-app">
@@ -146,7 +187,7 @@ define(function (require) {
                         </button>
                     </div>
                     <CMSelectCTLStep timelines={this.state.timelines} onSelect={this.handleSelect} />
-                    <CMTimelineStep timeline={this.state.timeline} />
+                    <CMTimelineStep timeline={this.state.timeline} tweets={this.state.tweets} onSort={this.handleSort} />
                 </div>
                 );
             } else {

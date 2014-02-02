@@ -59,6 +59,6 @@
 
 /* Drag and Drop */
 
-.dnd__item--dragged {
+.dnd__item--placeholder {
     opacity: .4;
 }
