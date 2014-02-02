@@ -20,6 +20,13 @@ define(function (require) {
         return client;
     };
 
+    Client.encodeQuery = function (query) {
+        return Object.keys(query || {}).map(function (key) {
+            return encodeURIComponent(_.string.underscored(key)) + '=' +
+                encodeURIComponent(query[key]);
+        }).join('&');
+    };
+
     Client.prototype.xhr = function (options) {
         var deferred = Q.defer();
         var xhr = new XMLHttpRequest();
@@ -29,10 +36,14 @@ define(function (require) {
 
         if (options.params) {
             // Very simplistic, but should work for our limited use cases.
-            params = '?' + Object.keys(options.params || {}).map(function (key) {
-                return _.string.underscored(key) + '=' +
-                    encodeURIComponent(options.params[key]);
-            }).join('&');
+            params = '?' + Client.encodeQuery(options.params);
+        }
+
+        if (options.form) {
+            options.headers = _.assign(options.headers || {}, {
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            });
+            options.data = Client.encodeQuery(options.form);
         }
 
         xhr.open(options.method, options.url + params, true);
@@ -103,6 +114,49 @@ define(function (require) {
                 id: (_.string.startsWith(id, 'custom-')) ? id : 'custom-' + id
             }, params)
         });
+    };
+
+    /**
+     * Creates a new CTL and (optionally) populates it with the given tweets in
+     * order.
+     *
+     * @param {object} ctlParams - Object describing the new custom timeline.
+     * @param {string} ctlParams.name - Name of the CTL.
+     * @param {string} ctlParams.description - Description of the CTL.
+     * @param {array=} tweetIds - List of Tweet IDs to add to the CTL.
+     *
+     * @returns {object} Promise reporting the progress if tweetIds have been
+     *                   specified.
+     */
+    Client.prototype.createCTL = function (ctlParams, tweetIds) {
+        var that = this;
+        var createP = this.request(
+            '/1.1/beta/timelines/custom/create.json',
+            'POST', { form: {
+                name: ctlParams.name,
+                description: ctlParams.description
+            } });
+
+        createP.then(function (response) {
+            /*jshint camelcase:false */
+            var timelineId = response.response.timeline_id;
+            var tweetPs = (tweetIds || []).map(that.addTweetToCTL.bind(that, timelineId));
+
+            // Make sure that we return the response in the end.
+            return Q.all(tweetPs).then(Q(response));
+        });
+
+        return createP;
+    };
+
+    Client.prototype.addTweetToCTL = function (ctlId, tweetId) {
+        /*jshint camelcase:false */
+        return this.request(
+            '/1.1/beta/timelines/custom/add.json',
+            'POST', { form: {
+                id: ctlId,
+                tweet_id: tweetId
+            } });
     };
 
     return Client;

@@ -4,7 +4,7 @@ define(function (require) {
 
     var React = require('react');
     var classSet = React.addons.classSet;
-    var client = require('api').getDefaultInstance();
+    var client = window.api = require('api').getDefaultInstance();
     var _ = require('lodash');
 
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
