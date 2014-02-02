@@ -19,7 +19,7 @@ define(function (require) {
             return <CMTweet tweet={tweet} />;
         },
         render: function () {
-            if (!this.props.timeline) {
+            if (!this.props.tweets.length) {
                 return <div></div>;
             } else {
                 return (

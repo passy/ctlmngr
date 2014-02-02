@@ -53,7 +53,7 @@ define(function (require) {
             return (
                 <section className="clearfix">
                     <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
-                        <h2>Step 1: Select a Custom Lineline</h2>
+                        <h2>Step 1: Select a Custom Tineline</h2>
                         <div className="input-group">
                             <input ref="url" className="form-control" type="url" placeholder="Enter a Custom Timeline URL" />
                             <span className="input-group-btn">
