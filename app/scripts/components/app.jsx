@@ -26,6 +26,14 @@ define(function (require) {
                 <section className="clearfix">
                     <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
                         <h2>Step 3: Save your Custom Timeline</h2>
+                        <div className="input-group l-marg-b-n">
+                            <label className="radio-inline">
+                                <input ref="saveType" name="saveType" type="radio" checked />Create New
+                            </label>
+                            <label className="radio-inline" disabled>
+                                <input ref="saveType" name="saveType" type="radio" disabled />Overwrite
+                            </label>
+                        </div>
                         <div className="input-group">
                             <input ref="name" className="form-control" type="text" placeholder="Name of your new Timeline" value={this.props.timeline.name} />
                             <span className="input-group-btn">
