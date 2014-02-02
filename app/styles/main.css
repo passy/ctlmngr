@@ -3,6 +3,7 @@
 [draggable] {
     /* Prevent the text contents of draggable elements from being selectable. */
     user-select: none;
+    cursor: move;
 }
 
 /* Text styles */
