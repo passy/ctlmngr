@@ -11,6 +11,7 @@ define(function (require) {
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
     var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
+    var WithMediator = require('components/with_mediator');
 
     var ProgressBar = React.createClass({
         render: function () {
@@ -30,6 +31,8 @@ define(function (require) {
     });
 
     var CMSaveStep = React.createClass({
+        mixins: [WithMediator(mediator)],
+
         getInitialState: function () {
             return {
                 saving: false
@@ -37,16 +40,8 @@ define(function (require) {
         },
 
         componentDidMount: function () {
-            this.subscriptions = [
-                mediator.on('dataCreateCTL', this.handleCTLCreated),
-                mediator.on('dataError', this.handleDataError),
-            ];
-        },
-
-        componentWillUnmount: function () {
-            this.subscriptions.forEach(function (sub) {
-                mediator.off(sub.id);
-            });
+            this.on('dataCreateCTL', this.handleCTLCreated);
+            this.on('dataError', this.handleDataError);
         },
 
         handleSubmit: function (e) {
@@ -54,7 +49,7 @@ define(function (require) {
 
             console.log('Would be saving these tweets now:', this.props.tweets.map(function (x) { return x.text; }));
             /*jshint camelcase:false */
-            mediator.publish('uiCreateCTL', {
+            this.trigger('uiCreateCTL', {
                 name: this.refs.name.getDOMNode().value,
                 description: 'Automatically created by ctlmngr',
                 tweetIds: this.props.tweets.map(function (x) { return x.id_str; })

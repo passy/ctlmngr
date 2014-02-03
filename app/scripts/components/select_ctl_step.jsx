@@ -6,15 +6,13 @@ define(function (require) {
     var mediator = require('mediator');
     var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
     var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
+    var WithMediator = require('components/with_mediator');
 
     return React.createClass({
-        componentDidMount: function () {
-            this.resolveSubscription = mediator.on(
-                'dataResolveCTL', this.handleResolve);
-        },
+        mixins: [WithMediator(mediator)],
 
-        componentWillUnmount: function () {
-            mediator.off(this.resolveSubscription.id);
+        componentDidMount: function () {
+            this.on('dataResolveCTL', this.handleResolve);
         },
 
         handleSubmit: function (e) {
@@ -25,7 +23,7 @@ define(function (require) {
         },
 
         handleSelect: function (ctlKey) {
-            mediator.publish('uiResolveCTL', {
+            this.trigger('uiResolveCTL', {
                 id: ctlKey
             });
         },
@@ -45,7 +43,7 @@ define(function (require) {
                 throw new Error(msg);
             }
 
-            mediator.publish('uiResolveCTL', {
+            this.publish('uiResolveCTL', {
                 id: id
             });
         },
