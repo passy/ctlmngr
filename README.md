@@ -30,5 +30,6 @@ virtualenv .ve
 . .ve/bin/activate
 pip install -r requirements.txt
 pip install honcho
+$EDITOR .env # Set up API keys and stuff
 honcho start
 ```
