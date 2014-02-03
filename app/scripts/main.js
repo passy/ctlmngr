@@ -20,6 +20,11 @@
         _.string = _s;
     });
 
+    require(['q'], function (Q) {
+        // While debugging ...
+        Q.longStackSupport = true;
+    });
+
     require(['bootstrap'], function (bootstrap) {
         bootstrap(document.querySelector('.js-cm-app'));
     });

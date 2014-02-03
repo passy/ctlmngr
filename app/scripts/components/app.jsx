@@ -5,6 +5,7 @@ define(function (require) {
     var React = require('react');
     var classSet = React.addons.classSet;
     var client = window.api = require('api').getDefaultInstance();
+    var mediator = require('mediator');
     var _ = require('lodash');
 
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
@@ -35,14 +36,42 @@ define(function (require) {
             };
         },
 
+        componentDidMount: function () {
+            this.subscriptions = [
+                mediator.subscribe('dataCreateCTL', this.handleCTLCreated),
+                mediator.subscribe('dataError', this.handleDataError),
+            ];
+        },
+
+        componentWillUnmount: function () {
+            this.subscriptions.forEach(mediator.remove);
+        },
+
         handleSubmit: function (e) {
             e.preventDefault();
 
             console.log('Would be saving these tweets now:', this.props.tweets.map(function (x) { return x.text; }));
+            /*jshint camelcase:false */
+            mediator.publish('uiCreateCTL', {
+                name: this.refs.name.getDOMNode().value,
+                description: 'Automatically created by ctlmngr',
+                tweetIds: this.props.tweets.map(function (x) { return x.id_str; })
+            });
 
             this.setState({
                 saving: true
             });
+        },
+
+        handleCTLCreated: function () {
+            // TODO: Improve?
+            window.alert('CTL created. Better check TweetDeck if this actually worked.');
+        },
+
+        handleDataError: function (e) {
+            // TODO: Improve?
+            console.error(e);
+            window.alert('Shit went haywire.');
         },
 
         renderProgress: function () {
@@ -83,7 +112,10 @@ define(function (require) {
                             </label>
                         </div>
                         <div className="input-group">
-                            <input ref="name" className="form-control" type="text" placeholder="Name of your new Timeline" value={this.props.timeline.name} />
+                            <input ref="name"
+                                className="form-control"
+                                type="text" placeholder="Name of your new Timeline"
+                                defaultValue={this.props.timeline.name} />
                             <span className="input-group-btn">
                                 <button className="btn btn-default" type="submit">Save</button>
                             </span>

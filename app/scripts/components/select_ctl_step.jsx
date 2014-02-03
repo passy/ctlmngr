@@ -9,11 +9,12 @@ define(function (require) {
 
     return React.createClass({
         componentDidMount: function () {
-            var that = this;
+            this.resolveSubscription = mediator.subscribe(
+                'dataResolveCTL', this.handleResolve);
+        },
 
-            mediator.subscribe('dataResolveCTL', function (data) {
-                that.handleResolve(data.ctl);
-            });
+        componentWillUnmount: function () {
+            mediator.remove(this.resolveSubscription);
         },
 
         handleSubmit: function (e) {
@@ -29,8 +30,8 @@ define(function (require) {
             });
         },
 
-        handleResolve: function (ctl) {
-            this.props.onSelect(ctl);
+        handleResolve: function (ctlResponse) {
+            this.props.onSelect(ctlResponse.ctl);
         },
 
         resolveCTL: function (url) {

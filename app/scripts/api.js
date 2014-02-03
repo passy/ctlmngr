@@ -138,12 +138,21 @@ define(function (require) {
             } });
 
         createP.then(function (response) {
+            var deferred = Q.defer();
             /*jshint camelcase:false */
-            var timelineId = response.response.timeline_id;
-            var tweetPs = (tweetIds || []).map(that.addTweetToCTL.bind(that, timelineId));
+            var ctlId = response.response.timeline_id;
+            var counter = 0;
+
+            var tweetPs = (tweetIds || []).map(function (tweetId) {
+                return that.addTweetToCTL(ctlId, tweetId).then(function (res) {
+                    deferred.notify(++counter);
+
+                    return res;
+                });
+            });
 
             // Make sure that we return the response in the end.
-            return Q.all(tweetPs).then(Q(response));
+            return Q.all(tweetPs).then(deferred.promise);
         });
 
         return createP;
