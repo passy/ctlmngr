@@ -18,3 +18,17 @@ grunt serve
 ```
 grunt build
 ```
+
+**API Proxy**
+
+You also need an API proxy. Why not use [twoxpy](http://github.com/passy/twoxpy)? By default it should listen on port 5000.
+
+```bash
+git clone https://github.com/passy/twoxpy
+cd twoxpy
+virtualenv .ve
+. .ve/bin/activate
+pip install -r requirements.txt
+pip install honcho
+honcho start
+```
