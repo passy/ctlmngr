@@ -38,13 +38,15 @@ define(function (require) {
 
         componentDidMount: function () {
             this.subscriptions = [
-                mediator.subscribe('dataCreateCTL', this.handleCTLCreated),
-                mediator.subscribe('dataError', this.handleDataError),
+                mediator.on('dataCreateCTL', this.handleCTLCreated),
+                mediator.on('dataError', this.handleDataError),
             ];
         },
 
         componentWillUnmount: function () {
-            this.subscriptions.forEach(mediator.remove);
+            this.subscriptions.forEach(function (sub) {
+                mediator.off(sub.id);
+            });
         },
 
         handleSubmit: function (e) {
@@ -147,6 +149,10 @@ define(function (require) {
             });
         },
 
+        resetSession: function () {
+            this.replaceState(this.getInitialState());
+        },
+
         setTimelines: function (timelines) {
             this.setState({
                 timelines: timelines
@@ -172,9 +178,7 @@ define(function (require) {
         },
 
         handleLogout: function () {
-            client.logout().then(function () {
-                this.setSession(null);
-            }.bind(this));
+            client.logout().then(this.resetSession);
         },
 
         handleSort: function (sortedItems) {
