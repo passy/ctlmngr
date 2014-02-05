@@ -141,8 +141,9 @@ define(function (require) {
                 name: ctlParams.name,
                 description: ctlParams.description
             } });
+        tweetIds = tweetIds || [];
 
-        if (!tweetIds) {
+        if (!tweetIds.length) {
             return createP;
         }
 
@@ -154,15 +155,17 @@ define(function (require) {
 
             // These have to be executed sequentially and we want to resolve the
             // CTL response instead of the adding responses.
+            console.log('reducing tweet ids:', tweetIds);
             tweetIds.reduce(function (prom, tweetId) {
-                // Unfortunately, this doesn't bubble up at the moment and I
-                // can't really think of a pretty alternative to that.
-                deferred.notify(counter++);
+                return prom.then(function () {
+                    // Unfortunately, this doesn't bubble up at the moment and I
+                    // can't really think of a pretty alternative to that.
+                    deferred.notify(counter++);
 
-                if (_.isFunction(progressCb)) {
-                    progressCb(counter);
-                }
-                return prom.then(that.addTweetToCTL.bind(that, ctlId, tweetId));
+                    if (_.isFunction(progressCb)) {
+                        progressCb(counter);
+                    }
+                }).then(that.addTweetToCTL.bind(that, ctlId, tweetId));
             }, Q()).then(deferred.resolve.bind(deferred, response),
                     deferred.reject.bind(deferred));
 
@@ -173,17 +176,13 @@ define(function (require) {
 
     Client.prototype.addTweetToCTL = function (ctlId, tweetId) {
         /*jshint camelcase:false */
-        var def = Q.defer();
 
-        setTimeout(def.resolve.bind(def), 3000);
-
-        return def.promise;
-        // return this.request(
-        //     '/1.1/beta/timelines/custom/add.json',
-        //     'POST', { form: {
-        //         id: ctlId,
-        //         tweet_id: tweetId
-        //     } });
+        return this.request(
+            '/1.1/beta/timelines/custom/add.json',
+            'POST', { form: {
+                id: ctlId,
+                tweet_id: tweetId
+            } });
     };
 
     return Client;

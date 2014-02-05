@@ -22,7 +22,7 @@ define(function (require) {
                 <div className="progress-bar" role="progressbar"
                     aria-valuenow={this.props.value}
                     aria-valuemin={this.props.min}
-                    aria-valuemac={this.props.max}
+                    aria-valuemax={this.props.max}
                     style={{ width: perc }}>
                     <span className="sr-only">{perc + ' complete'}</span>
                 </div>
@@ -48,7 +48,6 @@ define(function (require) {
         handleSubmit: function (e) {
             e.preventDefault();
 
-            console.log('Would be saving these tweets now:', this.props.tweets.map(function (x) { return x.text; }));
             /*jshint camelcase:false */
             this.trigger('uiCreateCTL', {
                 name: this.refs.name.getDOMNode().value,
@@ -70,7 +69,7 @@ define(function (require) {
             window.alert('CTL created. Better check TweetDeck if this actually worked.');
         },
 
-        handleCTLProgress: function (e, data) {
+        handleCTLProgress: function (data) {
             this.setState({
                 saving: _.assign(this.state.saving, { value: data.value })
             });
