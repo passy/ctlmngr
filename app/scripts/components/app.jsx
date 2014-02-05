@@ -35,12 +35,13 @@ define(function (require) {
 
         getInitialState: function () {
             return {
-                saving: false
+                saving: null
             };
         },
 
         componentDidMount: function () {
             this.on('dataCreateCTL', this.handleCTLCreated);
+            this.on('dataCreateCTLProgress', this.handleCTLProgress);
             this.on('dataError', this.handleDataError);
         },
 
@@ -56,13 +57,23 @@ define(function (require) {
             });
 
             this.setState({
-                saving: true
+                saving: { value: 0, total: this.props.tweets.length }
             });
         },
 
         handleCTLCreated: function () {
             // TODO: Improve?
+
+            this.setState({
+                saving: null
+            });
             window.alert('CTL created. Better check TweetDeck if this actually worked.');
+        },
+
+        handleCTLProgress: function (e, data) {
+            this.setState({
+                saving: _.assign(this.state.saving, { value: data.value })
+            });
         },
 
         handleDataError: function (e) {
@@ -79,8 +90,8 @@ define(function (require) {
 
             return <ProgressBar className="l-marg-v-n"
                 min="0"
-                max="100"
-                value="50" />;
+                max={this.state.saving.total}
+                value={this.state.saving.value} />;
         },
 
         render: function () {
@@ -111,7 +122,9 @@ define(function (require) {
                         <div className="input-group">
                             <input ref="name"
                                 className="form-control"
-                                type="text" placeholder="Name of your new Timeline"
+                                type="text"
+                                maxLength="25"
+                                placeholder="Name of your new Timeline"
                                 defaultValue={this.props.timeline.name} />
                             <span className="input-group-btn">
                                 <button className="btn btn-default" type="submit">Save</button>

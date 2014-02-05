@@ -120,15 +120,20 @@ define(function (require) {
      * Creates a new CTL and (optionally) populates it with the given tweets in
      * order.
      *
+     * @callback progressCallback progressCb - What should have gone through the
+     * promise.
+     *
      * @param {object} ctlParams - Object describing the new custom timeline.
      * @param {string} ctlParams.name - Name of the CTL.
      * @param {string} ctlParams.description - Description of the CTL.
      * @param {array=} tweetIds - List of Tweet IDs to add to the CTL.
+     * @param {progressCallback} progressCb - Takes the one-based index of the
+     * request currently being worked on.
      *
      * @returns {object} Promise reporting the progress if tweetIds have been
      *                   specified.
      */
-    Client.prototype.createCTL = function (ctlParams, tweetIds) {
+    Client.prototype.createCTL = function (ctlParams, tweetIds, progressCb) {
         var that = this;
         var createP = this.request(
             '/1.1/beta/timelines/custom/create.json',
@@ -144,8 +149,12 @@ define(function (require) {
             var counter = 0;
 
             var tweetPs = (tweetIds || []).map(function (tweetId) {
+                console.log('add tweet to ctl: ', tweetId);
                 return that.addTweetToCTL(ctlId, tweetId).then(function (res) {
                     deferred.notify(++counter);
+                    if (_.isFunction(progressCb)) {
+                        progressCb(counter);
+                    }
 
                     return res;
                 });
@@ -160,12 +169,17 @@ define(function (require) {
 
     Client.prototype.addTweetToCTL = function (ctlId, tweetId) {
         /*jshint camelcase:false */
-        return this.request(
-            '/1.1/beta/timelines/custom/add.json',
-            'POST', { form: {
-                id: ctlId,
-                tweet_id: tweetId
-            } });
+        var def = Q.defer();
+
+        setTimeout(def.resolve.bind(def), 3000);
+
+        return def.promise;
+        // return this.request(
+        //     '/1.1/beta/timelines/custom/add.json',
+        //     'POST', { form: {
+        //         id: ctlId,
+        //         tweet_id: tweetId
+        //     } });
     };
 
     return Client;
