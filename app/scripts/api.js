@@ -142,29 +142,33 @@ define(function (require) {
                 description: ctlParams.description
             } });
 
-        createP.then(function (response) {
+        if (!tweetIds) {
+            return createP;
+        }
+
+        return createP.then(function (response) {
             var deferred = Q.defer();
             /*jshint camelcase:false */
             var ctlId = response.response.timeline_id;
             var counter = 0;
 
-            var tweetPs = (tweetIds || []).map(function (tweetId) {
-                console.log('add tweet to ctl: ', tweetId);
-                return that.addTweetToCTL(ctlId, tweetId).then(function (res) {
-                    deferred.notify(++counter);
-                    if (_.isFunction(progressCb)) {
-                        progressCb(counter);
-                    }
+            // These have to be executed sequentially and we want to resolve the
+            // CTL response instead of the adding responses.
+            tweetIds.reduce(function (prom, tweetId) {
+                // Unfortunately, this doesn't bubble up at the moment and I
+                // can't really think of a pretty alternative to that.
+                deferred.notify(counter++);
 
-                    return res;
-                });
-            });
+                if (_.isFunction(progressCb)) {
+                    progressCb(counter);
+                }
+                return prom.then(that.addTweetToCTL.bind(that, ctlId, tweetId));
+            }, Q()).then(deferred.resolve.bind(deferred, response),
+                    deferred.reject.bind(deferred));
 
-            // Make sure that we return the response in the end.
-            return Q.all(tweetPs).then(deferred.promise);
+            // Make sure that we return just the response in the end.
+            return deferred.promise;
         });
-
-        return createP;
     };
 
     Client.prototype.addTweetToCTL = function (ctlId, tweetId) {
