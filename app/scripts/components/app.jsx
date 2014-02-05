@@ -8,6 +8,7 @@ define(function (require) {
     var mediator = require('mediator');
     var _ = require('lodash');
 
+    var ctlResolver = require('ctl_resolver');
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
     var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
@@ -47,9 +48,11 @@ define(function (require) {
 
         handleSubmit: function (e) {
             e.preventDefault();
+            var saveType = this.refs.form.getDOMNode().saveType.value;
 
             /*jshint camelcase:false */
-            this.trigger('uiCreateCTL', {
+            this.trigger(saveType === 'overwrite' ? 'uiOverwriteCTL' : 'uiCreateCTL', {
+                id: this.props.timeline.id,
                 name: this.refs.name.getDOMNode().value,
                 description: 'Automatically created by ctlmngr',
                 tweetIds: this.props.tweets.map(function (x) { return x.id_str; })
@@ -105,17 +108,17 @@ define(function (require) {
 
             return (
                 <section className="clearfix">
-                    <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
+                    <form className="center-block dim-half-width" ref="form" onSubmit={this.handleSubmit}>
                         <h2>Step 3: Save your Custom Timeline</h2>
 
                         {this.renderProgress()}
                         <div className={innerFormClasses}>
                         <div className="input-group l-marg-b-n">
                             <label className="radio-inline">
-                                <input ref="saveType" name="saveType" type="radio" checked />Create New
+                                <input name="saveType" type="radio" value="create" defaultChecked />Create New
                             </label>
-                            <label className="radio-inline" disabled>
-                                <input ref="saveType" name="saveType" type="radio" disabled />Overwrite
+                            <label className="radio-inline">
+                                <input name="saveType" type="radio" value="overwrite" />Overwrite
                             </label>
                         </div>
                         <div className="input-group">
@@ -178,10 +181,18 @@ define(function (require) {
                 throw new Error('Unexpected CTL response: ' + JSON.stringify(ctl));
             }
 
-            this.setState({
-                timeline: timeline,
-                tweets: tweets
-            });
+            // Augment timeline object with the actual id, because having just
+            // the URL is silly.
+            /*jshint camelcase:false */
+            ctlResolver.resolveURL(timeline.custom_timeline_url).then(function (id) {
+                timeline.id = id;
+
+                this.setState({
+                    timeline: timeline,
+                    tweets: tweets
+                });
+            }.bind(this)).done();
+            // No error handling cause this should never fail #famouslastwords
         },
 
         handleLogout: function () {

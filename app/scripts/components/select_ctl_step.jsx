@@ -5,8 +5,8 @@ define(function (require) {
     var React = require('react');
     var mediator = require('mediator');
     var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
-    var CTL_RE = /^https?:\/\/twitter.com\/[^\/]+\/timelines\/(\d+)$/i;
     var WithMediator = require('components/with_mediator');
+    var ctlResolver = require('ctl_resolver');
 
     return React.createClass({
         mixins: [WithMediator(mediator)],
@@ -33,18 +33,13 @@ define(function (require) {
         },
 
         resolveCTL: function (url) {
-            var matches = url.match(CTL_RE);
-            var id = (matches || [])[1];
-
-            if (!id) {
-                // TODO
-                var msg = 'Invalid URL. I should better handle this error ...';
-                alert(msg);
-                throw new Error(msg);
-            }
-
-            this.publish('uiResolveCTL', {
-                id: id
+            ctlResolver.resolveURL(url).then(function (id) {
+                this.publish('uiResolveCTL', {
+                    id: id
+                });
+            }, function (e) {
+                // TODO: Alert box modal anyone?
+                window.alert('Invalid CTL: ' + e);
             });
         },
 
@@ -67,4 +62,4 @@ define(function (require) {
             );
         }
     });
-})
+});

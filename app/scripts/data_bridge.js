@@ -11,6 +11,7 @@ define(function (require) {
     DataBridge.prototype.listen = function () {
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
+        this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
     };
 
     DataBridge.prototype.resolveCTL = function (data) {
@@ -56,6 +57,23 @@ define(function (require) {
                 method: 'createCTL',
                 status: e.status,
                 message: 'Creating CTL or attaching Tweets failed.',
+                data: data
+            });
+        }.bind(this)).done();
+    };
+
+    /**
+     * Identically to create but deletes the timeline first. Dispatches the same
+     * events!
+     *
+     * Expects data.id in addition to what createCtl expects.
+     */
+    DataBridge.prototype.overwriteCTL = function (data) {
+        client.destroyCTL(data.id).then(this.createCTL.bind(this, data), function (e) {
+            this.mediator.publish('dataError', {
+                method: 'overwriteCTL',
+                status: e.status,
+                message: 'Deleting CTL failed.',
                 data: data
             });
         }.bind(this)).done();

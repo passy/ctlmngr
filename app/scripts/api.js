@@ -156,7 +156,7 @@ define(function (require) {
             // These have to be executed sequentially and we want to resolve the
             // CTL response instead of the adding responses.
             console.log('reducing tweet ids:', tweetIds);
-            tweetIds.reduce(function (prom, tweetId) {
+            tweetIds.reverse().reduce(function (prom, tweetId) {
                 return prom.then(function () {
                     // Unfortunately, this doesn't bubble up at the moment and I
                     // can't really think of a pretty alternative to that.
@@ -172,6 +172,20 @@ define(function (require) {
             // Make sure that we return just the response in the end.
             return deferred.promise;
         });
+    };
+
+    /**
+     * Remove a CTL completely.
+     *
+     * @param ctlId {string} - ID of the CTL.
+     *
+     */
+    Client.prototype.destroyCTL = function (ctlId) {
+        return this.request(
+            '/1.1/beta/timelines/custom/destroy.json',
+            'POST', { form: {
+                id: (_.string.startsWith(ctlId, 'custom-')) ? ctlId : 'custom-' + ctlId
+            } });
     };
 
     Client.prototype.addTweetToCTL = function (ctlId, tweetId) {
