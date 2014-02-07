@@ -5,6 +5,7 @@ define(function (require) {
 
     var API = require('api');
     var CMApp = require('jsx!scripts/components/app.jsx?jsx');
+    var GlobalProgressBar = require('jsx!scripts/components/global_progress_bar.jsx?jsx');
     var DataBridge = require('data_bridge');
     var mediator = require('mediator');
 
@@ -40,12 +41,18 @@ define(function (require) {
         });
     }
 
-    return function bootstrap(node) {
+    return function bootstrap(node, options) {
         var dataBridge = new DataBridge(mediator);
+        options = options || {};
         dataBridge.listen();
 
         start().then(loadCTLs).done();
         React.renderComponent(cmApp, node);
+
+        if (options.globalProgressBar) {
+            React.renderComponent(new GlobalProgressBar(),
+                                  options.globalProgressBar);
+        }
 
         mediator.subscribe('dataError', function (e) {
             console.error('Data error:', e);
