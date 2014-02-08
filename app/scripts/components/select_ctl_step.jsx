@@ -34,10 +34,10 @@ define(function (require) {
 
         resolveCTL: function (url) {
             ctlResolver.resolveURL(url).then(function (id) {
-                this.publish('uiResolveCTL', {
+                this.trigger('uiResolveCTL', {
                     id: id
                 });
-            }, function (e) {
+            }.bind(this), function (e) {
                 // TODO: Alert box modal anyone?
                 window.alert('Invalid CTL: ' + e);
             });
