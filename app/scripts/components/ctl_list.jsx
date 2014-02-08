@@ -3,6 +3,7 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
+    var TransitionGroup = React.addons.TransitionGroup;
 
     return React.createClass({
         handleSelect: function (ctlKey, ctl, e) {
@@ -12,6 +13,7 @@ define(function (require) {
 
         renderCTLSelector: function (ctlKey) {
             var ctl = this.props.timelines[ctlKey];
+            /*jshint camelcase:false */
             return <li key={ctlKey}>
                 <a href={ctl.custom_timeline_url} onClick={this.handleSelect.bind(null, ctlKey, ctl)}>
                     {ctl.name} ({ctl.description})
@@ -23,9 +25,9 @@ define(function (require) {
             if (Object.keys(this.props.timelines).length) {
                 return <div>
                     <p>Or select from the list below:</p>
-                    <ul>
+                    <TransitionGroup component={React.DOM.ul} transitionName="roll-in">
                         {Object.keys(this.props.timelines).map(this.renderCTLSelector)}
-                    </ul>
+                    </TransitionGroup>
                 </div>;
             } else {
                 return <div />;
