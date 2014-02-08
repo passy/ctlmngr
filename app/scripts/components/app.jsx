@@ -43,11 +43,19 @@ define(function (require) {
         },
 
         handleSelect: function (ctl) {
+            /*jshint camelcase:false */
             // TODO: I think this should go through a URL change.
 
-            var tweets = Object.keys(ctl.objects.tweets).map(function (key) {
-                return _.assign({ key: key }, ctl.objects.tweets[key]);
+            // Not 100% sure that I can always rely on the keys being present,
+            // but this is some really neat FP stuff right here.
+            var tweets = ctl.response.timeline.map(function (obj) {
+                return obj.tweet;
+            }).sort(function (a, b) {
+                return a.sort_index < b.sort_index;
+            }).map(function (obj) {
+                return _.assign({ key: obj.id }, ctl.objects.tweets[obj.id]);
             });
+
             var timeline = _.first(_.pairs(ctl.objects.timelines))[1];
 
             if (!timeline) {
