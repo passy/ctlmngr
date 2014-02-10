@@ -106,5 +106,4 @@ define(function (require) {
             }
         }
     });
-
 });

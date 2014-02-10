@@ -5,7 +5,6 @@ define(function (require) {
 
     var API = require('api');
     var CMApp = require('jsx!scripts/components/app.jsx?jsx');
-    var GlobalProgressBar = require('jsx!scripts/components/global_progress_bar.jsx?jsx');
     var DataBridge = require('data_bridge');
     var mediator = require('mediator');
 
@@ -32,6 +31,7 @@ define(function (require) {
             return;
         }
 
+        /*jshint camelcase:false */
         client.getCTLs({
             userId: userSession.user_id,
             sendErrorCodes: true

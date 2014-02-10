@@ -25,7 +25,6 @@ define(function (require) {
         }
     });
 
-
     return React.createClass({
         mixins: [WithMediator(mediator)],
 

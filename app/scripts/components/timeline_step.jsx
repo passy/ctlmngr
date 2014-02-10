@@ -20,7 +20,7 @@ define(function (require) {
         },
         render: function () {
             if (!this.props.tweets.length) {
-                return <div></div>;
+                return <div />;
             } else {
                 return (
                     <section className="center-block dim-half-width">
