@@ -49,11 +49,6 @@ define(function (require) {
         start().then(loadCTLs).done();
         React.renderComponent(cmApp, node);
 
-        if (options.globalProgressBar) {
-            React.renderComponent(new GlobalProgressBar(),
-                                  options.globalProgressBar);
-        }
-
         mediator.subscribe('dataError', function (e) {
             console.error('Data error:', e);
             try {
