@@ -63,17 +63,30 @@ define(function (require) {
     };
 
     /**
-     * Identically to create but deletes the timeline first. Dispatches the same
-     * events!
+     * Overwrites the Tweets in an existing CTL.
      *
      * Expects data.id in addition to what createCtl expects.
      */
     DataBridge.prototype.overwriteCTL = function (data) {
-        client.destroyCTL(data.id).then(this.createCTL.bind(this, data), function (e) {
+        function handleProgress(mediator, progress) {
+            console.log('Overwrite progress reported: ', progress);
+            mediator.publish('dataOverwriteCTLProgress', {
+                value: progress
+            });
+        }
+
+        client.overwriteCTL(
+            data.id, data.tweetIds, handleProgress.bind(this, this.mediator)
+        ).then(function (response) {
+            this.mediator.publish('dataOverwriteCTL', {
+                key: data.key,
+                response: response
+            });
+        }, function (e) {
             this.mediator.publish('dataError', {
                 method: 'overwriteCTL',
                 status: e.status,
-                message: 'Deleting CTL failed.',
+                message: 'Fetching or overwriting CTL failed.',
                 data: data
             });
         }.bind(this)).done();
