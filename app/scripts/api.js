@@ -45,13 +45,13 @@ define(function (require) {
 
         if (options.json) {
             options.headers = _.assign(options.headers || {}, {
-                'content-type': 'application/json'
+                'Content-Type': 'application/json'
             });
             options.data = JSON.stringify(options.json);
 
         } else if (options.form) {
             options.headers = _.assign(options.headers || {}, {
-                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             });
             options.data = Client.encodeQuery(options.form);
         }
@@ -226,7 +226,7 @@ define(function (require) {
         return this.request(
             '/1.1/beta/timelines/custom/curate.json', 'POST', { json: {
                 id: ctlId,
-                ops: JSON.stringify(ops)
+                changes: ops
             } }
         );
     };
