@@ -36,9 +36,7 @@ define(function (require) {
     DataBridge.prototype.createCTL = function (data) {
         function handleProgress(mediator, progress) {
             console.log('Progress reported: ', progress);
-            mediator.publish('dataCreateCTLProgress', {
-                value: progress
-            });
+            mediator.publish('dataCreateCTLProgress', progress);
         }
 
         client.createCTL({
@@ -70,9 +68,7 @@ define(function (require) {
     DataBridge.prototype.overwriteCTL = function (data) {
         function handleProgress(mediator, progress) {
             console.log('Overwrite progress reported: ', progress);
-            mediator.publish('dataOverwriteCTLProgress', {
-                value: progress
-            });
+            mediator.publish('dataOverwriteCTLProgress', progress);
         }
 
         client.overwriteCTL(
@@ -82,7 +78,7 @@ define(function (require) {
                 key: data.key,
                 response: response
             });
-        }, function (e) {
+        }.bind(this), function (e) {
             this.mediator.publish('dataError', {
                 method: 'overwriteCTL',
                 status: e.status,

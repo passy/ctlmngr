@@ -225,7 +225,7 @@ define(function (require) {
 
         return this.request(
             '/1.1/beta/timelines/custom/curate.json', 'POST', { json: {
-                id: ctlId,
+                id: Client.normalizeCTLId(ctlId),
                 changes: ops
             } }
         );
@@ -252,14 +252,15 @@ define(function (require) {
         return this.getCTL(ctlId).then(function (ctl) {
             progressCb({ value: 0, total: 1 });
 
-            var removeOps = Object.keys(ctl.response.objects.tweets).map(function (key) {
+            var removeOps = Object.keys(ctl.objects.tweets).map(function (key) {
                 return {
                     tweetId: key,
                     op: 'remove'
                 };
             });
 
-            var addOps = tweetIds.map(function (id) {
+            // Add them in the reverse order
+            var addOps = tweetIds.reverse().map(function (id) {
                 return {
                     tweetId: id,
                     op: 'add'

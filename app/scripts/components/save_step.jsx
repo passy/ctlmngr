@@ -36,7 +36,10 @@ define(function (require) {
 
         componentDidMount: function () {
             this.on('dataCreateCTL', this.handleCTLCreated);
+            // For now.
+            this.on('dataOverwriteCTL', this.handleCTLCreated);
             this.on('dataCreateCTLProgress', this.handleCTLProgress);
+            this.on('dataOverwriteCTLProgress', this.handleCTLProgress);
             this.on('dataError', this.handleDataError);
         },
 
@@ -53,7 +56,7 @@ define(function (require) {
             });
 
             this.setState({
-                saving: { value: 0, total: this.props.tweets.length }
+                saving: { value: 0, total: -1 }
             });
         },
 
@@ -68,7 +71,7 @@ define(function (require) {
 
         handleCTLProgress: function (data) {
             this.setState({
-                saving: _.assign(this.state.saving, { value: data.value })
+                saving: _.assign(this.state.saving, data)
             });
         },
 
