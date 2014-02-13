@@ -4,6 +4,7 @@ define(function (require) {
 
     var React = require('react');
     var SortableList = require('jsx!scripts/components/sortable_list.jsx?jsx');
+    var Spinner = require('jsx!scripts/components/spinner.jsx?jsx');
 
     var CMTweet = React.createClass({
         render: function () {
@@ -19,20 +20,26 @@ define(function (require) {
             return <CMTweet tweet={tweet} />;
         },
         render: function () {
-            if (!this.props.tweets.length) {
+            var loading = this.props.tweets.length === 0;
+            console.log('timeline', this.props.timeline);
+            if (this.props.timeline === null) {
                 return <div />;
-            } else {
-                return (
-                    <section className="center-block dim-half-width">
-                        <h2>Step 2: Reorder your Tweets</h2>
+            }
+
+            return (
+                <section className="center-block dim-half-width">
+                    <h2>Step 2: Reorder your Tweets</h2>
+                    <div className="text-center">
+                    <Spinner loading={loading}>
                         <SortableList
                             items={this.props.tweets}
                             renderItem={this.renderTweet}
                             onSort={this.props.onSort}>
                         </SortableList>
-                    </section>
-                );
-            }
+                    </Spinner>
+                    </div>
+                </section>
+            );
         }
     });
 });

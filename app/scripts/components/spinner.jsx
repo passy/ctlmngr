@@ -18,7 +18,11 @@ define(function (require) {
                     small: this.props.size === 'small',
                     large: this.props.size === 'large'
                 });
-                return <div className={classes}><div>Loading…</div></div>;
+                return (
+                    <div className="text-center">
+                        <div className={classes}><div>Loading…</div></div>
+                    </div>
+                );
             }
 
             return this.props.children;
