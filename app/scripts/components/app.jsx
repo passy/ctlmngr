@@ -91,6 +91,13 @@ define(function (require) {
         },
 
         handleSelect: function (ctlKey) {
+            // Reset the state and set the timeline to an empty object so we can
+            // differentiate between an unselected and unloaded timeline.
+            this.setState({
+                timeline: {},
+                tweets: []
+            });
+
             this.trigger('uiResolveCTL', {
                 id: ctlKey
             });
