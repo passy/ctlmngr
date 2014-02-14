@@ -95,7 +95,7 @@ define(function (require) {
 
         render: function () {
             // TODO: Description and option to overwrite existing
-            if (!this.props.timeline) {
+            if (_.isEmpty(this.props.timeline)) {
                 return <div />;
             }
 
