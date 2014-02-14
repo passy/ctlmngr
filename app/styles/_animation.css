@@ -1,18 +1,20 @@
 /* Roll In */
 
 @keyframes roll-in {
-  0% {
+  from {
     opacity: 0;
     transform: rotateX(90deg);
   }
 
-  100% {
+  to {
     opacity: 1;
     transform: rotateX(0deg);
   }
 }
 
 .roll-in-enter {
+    /* -active is applied later causing a slight flicker */
+    opacity: 0;
     animation-duration: 1s;
 }
 

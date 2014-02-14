@@ -62,6 +62,7 @@ define(function (require) {
 
         handleCTLCreated: function () {
             // TODO: Improve?
+            // Should refresh the timelines list.
 
             this.setState({
                 saving: null
