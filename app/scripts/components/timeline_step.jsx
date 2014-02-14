@@ -29,7 +29,6 @@ define(function (require) {
             return (
                 <section className="center-block dim-half-width">
                     <h2>Step 2: Reorder your Tweets</h2>
-                    <div className="text-center">
                     <Spinner loading={loading}>
                         <SortableList
                             items={this.props.tweets}
@@ -37,7 +36,6 @@ define(function (require) {
                             onSort={this.props.onSort}>
                         </SortableList>
                     </Spinner>
-                    </div>
                 </section>
             );
         }

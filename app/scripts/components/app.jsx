@@ -6,13 +6,17 @@ define(function (require) {
     var client = require('api').getDefaultInstance();
     var _ = require('lodash');
 
+    var mediator = require('mediator');
     var ctlResolver = require('ctl_resolver');
     var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
     var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
     var CMSaveStep = require('jsx!scripts/components/save_step.jsx?jsx');
+    var WithMediator = require('components/with_mediator');
 
     return React.createClass({
+        mixins: [WithMediator(mediator)],
+
         getInitialState: function () {
             return {
                 session: null,
@@ -24,6 +28,10 @@ define(function (require) {
                 // them in a different format.
                 tweets: []
             };
+        },
+
+        componentDidMount: function () {
+            this.on('dataResolveCTL', this.handleTimelineResolved);
         },
 
         setSession: function (session) {
@@ -42,9 +50,11 @@ define(function (require) {
             });
         },
 
-        handleSelect: function (ctl) {
+        // TODO: I think this should go through a URL change.
+        handleTimelineResolved: function (data) {
             /*jshint camelcase:false */
-            // TODO: I think this should go through a URL change.
+
+            var ctl = data.ctl;
 
             // Not 100% sure that I can always rely on the keys being present,
             // but this is some really neat FP stuff right here.
@@ -78,6 +88,12 @@ define(function (require) {
 
         handleLogout: function () {
             client.logout().then(this.resetSession);
+        },
+
+        handleSelect: function (ctlKey) {
+            this.trigger('uiResolveCTL', {
+                id: ctlKey
+            });
         },
 
         handleSort: function (sortedItems) {

@@ -3,44 +3,26 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var mediator = require('mediator');
     var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
-    var WithMediator = require('components/with_mediator');
     var ctlResolver = require('ctl_resolver');
 
     return React.createClass({
-        mixins: [WithMediator(mediator)],
-
-        componentDidMount: function () {
-            this.on('dataResolveCTL', this.handleResolve);
-        },
-
         handleSubmit: function (e) {
             e.preventDefault();
 
             var url = this.refs.url.getDOMNode().value.trim();
-            this.resolveCTL(url);
+
+            ctlResolver.resolveURL(url).then(
+                this.props.onSelect.bind(this),
+                function (e) {
+                    // TODO: Alert box modal anyone?
+                    window.alert('Invalid CTL: ' + e);
+                }
+            );
         },
 
-        handleSelect: function (ctlKey) {
-            this.trigger('uiResolveCTL', {
-                id: ctlKey
-            });
-        },
-
-        handleResolve: function (ctlResponse) {
-            this.props.onSelect(ctlResponse.ctl);
-        },
-
-        resolveCTL: function (url) {
-            ctlResolver.resolveURL(url).then(function (id) {
-                this.trigger('uiResolveCTL', {
-                    id: id
-                });
-            }.bind(this), function (e) {
-                // TODO: Alert box modal anyone?
-                window.alert('Invalid CTL: ' + e);
-            });
+        handleSelect: function (ctlKey/*, ctl */) {
+            this.props.onSelect(ctlKey);
         },
 
         render: function () {
