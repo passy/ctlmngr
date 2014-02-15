@@ -63,7 +63,7 @@ define(function (require) {
             });
 
             var backdropClasses = classSet({
-                modalBackdrop: true,
+                'modal-backdrop': true,
                 fade: true,
                 in: this.state.visible
             });

@@ -2,11 +2,13 @@
 define(function (require) {
     'use strict';
 
+    var _ = require('lodash');
     var mediator = require('mediator');
     var React = require('react');
-    var classSet = React.addons.classSet;
     var WithMediator = require('components/with_mediator');
-    var _ = require('lodash');
+    var TwbsModal = require('jsx!scripts/components/twbs_modal.jsx?jsx');
+
+    var classSet = React.addons.classSet;
 
     var ProgressBar = React.createClass({
         render: function () {
@@ -30,7 +32,8 @@ define(function (require) {
 
         getInitialState: function () {
             return {
-                saving: null
+                saving: null,
+                error: null
             };
         },
 
@@ -76,10 +79,13 @@ define(function (require) {
             });
         },
 
-        handleDataError: function (e) {
-            // TODO: Improve?
-            console.error(e);
-            window.alert('Shit went haywire.');
+        handleDataError: function (data, channel) {
+            channel.stopPropagation();
+
+            console.log('Setting error state.');
+            this.setState({
+                error: data
+            });
         },
 
         renderProgress: function () {
@@ -92,6 +98,25 @@ define(function (require) {
                 min="0"
                 max={this.state.saving.total}
                 value={this.state.saving.value} />;
+        },
+
+        renderErrorModal: function () {
+            var handleDismiss = function () {
+                this.setState({
+                    error: null
+                });
+            }.bind(this);
+
+            if (!this.state.error) {
+                return <span />;
+            }
+
+            return <TwbsModal
+                title="Shit went haywire"
+                onRequestClose={handleDismiss}>
+                <strong>Status:</strong> {this.state.error.status}<br />
+                <strong>Message:</strong> {this.state.error.message}
+            </TwbsModal>;
         },
 
         render: function () {
@@ -110,6 +135,7 @@ define(function (require) {
                         <h2>Step 3: Save your Custom Timeline</h2>
 
                         {this.renderProgress()}
+                        {this.renderErrorModal()}
                         <div className={innerFormClasses}>
                         <div className="input-group l-marg-b-n">
                             <label className="radio-inline">

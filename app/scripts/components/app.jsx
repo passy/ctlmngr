@@ -110,7 +110,6 @@ define(function (require) {
         },
 
         render: function () {
-            var noop = function () {};
             /*jshint camelcase:false */
             if (this.state.session) {
                 return (
