@@ -4,9 +4,16 @@ define(function (require) {
 
     var React = require('react');
     var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
+    var TwbsModal = require('jsx!scripts/components/twbs_modal.jsx?jsx');
     var ctlResolver = require('ctl_resolver');
 
     return React.createClass({
+        getInitialState: function () {
+            return {
+                error: null
+            };
+        },
+
         handleSubmit: function (e) {
             e.preventDefault();
 
@@ -15,9 +22,10 @@ define(function (require) {
             ctlResolver.resolveURL(url).then(
                 this.props.onSelect.bind(this),
                 function (e) {
-                    // TODO: Alert box modal anyone?
-                    window.alert('Invalid CTL: ' + e);
-                }
+                    this.setState({
+                        error: e
+                    });
+                }.bind(this)
             );
         },
 
@@ -25,11 +33,30 @@ define(function (require) {
             this.props.onSelect(ctlKey);
         },
 
+        renderErrorModal: function () {
+            if (!this.state.error) {
+                return <span />;
+            }
+
+            var dismiss = function () {
+                this.setState({
+                    error: null
+                });
+            }.bind(this);
+
+            return <TwbsModal onRequestClose={dismiss}
+                title="Invalid Custom Timeline Requested">
+                Could not resolve Custom Timeline.<br />
+                <strong>{this.state.error.message}</strong>
+            </TwbsModal>;
+        },
+
         render: function () {
             return (
                 <section className="clearfix">
                     <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
                         <h2>Step 1: Select a Custom Tineline</h2>
+                        {this.renderErrorModal()}
                         <div className="input-group">
                             <input ref="url" className="form-control" type="url" placeholder="Enter a Custom Timeline URL" />
                             <span className="input-group-btn">

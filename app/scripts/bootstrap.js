@@ -57,6 +57,10 @@ define(function (require) {
             } catch (e) {
                 window.alert('Unrecoverable data error.');
             }
+        }, {
+            // Let this be very late in the chain so data error can be caught
+            // upstream.
+            priority: 100
         });
     };
 });

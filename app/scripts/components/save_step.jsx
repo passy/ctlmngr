@@ -43,7 +43,7 @@ define(function (require) {
             this.on('dataOverwriteCTL', this.handleCTLCreated);
             this.on('dataCreateCTLProgress', this.handleCTLProgress);
             this.on('dataOverwriteCTLProgress', this.handleCTLProgress);
-            this.on('dataError', this.handleDataError);
+            this.on('dataError', this.handleDataError, { priority: 0 });
         },
 
         handleSubmit: function (e) {
@@ -103,7 +103,8 @@ define(function (require) {
         renderErrorModal: function () {
             var handleDismiss = function () {
                 this.setState({
-                    error: null
+                    error: null,
+                    saving: null
                 });
             }.bind(this);
 
