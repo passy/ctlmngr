@@ -62,9 +62,15 @@ define(function (require) {
                 show: this.state.visible
             });
 
+            var backdropClasses = classSet({
+                modalBackdrop: true,
+                fade: true,
+                in: this.state.visible
+            });
+
             return (
                 <div>
-                <div className="modal-backdrop fade in"></div>
+                <div className={backdropClasses}></div>
                 <div className={modalClasses} onClick={this.handleDismiss}>
                     <div className="modal-dialog" onClick={this.killClick}>
                         <div className="modal-content">
