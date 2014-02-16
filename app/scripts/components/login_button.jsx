@@ -21,7 +21,7 @@ define(function (require) {
         render: function () {
             return (
                 <form className="text-center" onSubmit={this.handleLogin}>
-                    <button className="image-btn cm-image-btn-sign-in" type="submit"></button>
+                    <button className="btn-image cm-image-btn-sign-in" type="submit"></button>
                 </form>
             );
         }

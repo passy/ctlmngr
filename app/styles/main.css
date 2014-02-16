@@ -19,6 +19,26 @@
     margin: 40px 0 20px;
 }
 
+/* Navbar extension */
+.navbar-top {
+    border-radius: 0 !important;
+}
+
+/* Avatar */
+.user-avatar {
+    width: 2em;
+    border: 2px solid white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hover-zoom {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-zoom:hover {
+    transform: scale(3);
+}
+
 /* Dimension helpers */
 .dim-half-width {
     width: 50%;
@@ -28,7 +48,7 @@
     width: 100%;
 }
 
-/* Layour helpers */
+/* Layout helpers */
 
 .l-marg-t-n {
     margin-top: 1em;
@@ -51,6 +71,37 @@
     margin-bottom: 1em
 }
 
+.l-marg-h-n {
+    margin-left: 1em;
+    margin-right: 1em
+}
+
+.l-marg-t-s {
+    margin-top: .5em;
+}
+
+.l-marg-b-s {
+    margin-bottom: .5em;
+}
+
+.l-marg-l-s {
+    margin-left: .5em;
+}
+
+.l-marg-r-s {
+    margin-right: .5em;
+}
+
+.l-marg-v-s {
+    margin-top: .5em;
+    margin-bottom: .5em
+}
+
+.l-marg-h-s {
+    margin-left: .5em;
+    margin-right: .5em
+}
+
 /* Global states */
 
 .s-disabled {
@@ -61,7 +112,7 @@
 
 /* Custom Buttons */
 
-.image-btn {
+.btn-image {
     border: none;
 }
 
@@ -69,6 +120,12 @@
     width: 158px;
     height: 28px;
     background: transparent url(../images/signin.png) scroll no-repeat;
+}
+
+/* Custom image styles */
+
+.img-rounded {
+    border-radius: 3px;
 }
 
 /* Drag and Drop */

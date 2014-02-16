@@ -11,8 +11,8 @@
     "requirejs-text": "~2.0.10",
     "lodash": "~2.4.1",
     "underscore.string": "~2.3.3",
-    "components-bootstrap": "~3.0.3",
     "mediator-js": "~0.9.6",
-    "prefixfree": "*"
+    "prefixfree": "91790e8aff6d807cd62018479db2307e1972b92a",
+    "bootstrap-flatly": "663c6ccf6fca1bc5aa84313ef5585b8ad949ac90"
   }
 }
