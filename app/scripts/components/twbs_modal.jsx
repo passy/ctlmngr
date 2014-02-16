@@ -5,7 +5,7 @@ define(function (require) {
     var WithLayers = require('components/with_layers');
 
     return React.createClass({
-        mixins: [WithLayers],
+        mixins: [WithLayers(document.body)],
 
         propTypes: {
             title: React.PropTypes.string.isRequired,

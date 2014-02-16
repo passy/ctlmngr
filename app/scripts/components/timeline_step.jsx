@@ -21,7 +21,6 @@ define(function (require) {
         },
         render: function () {
             var loading = this.props.tweets.length === 0;
-            console.log('timeline', this.props.timeline);
             if (this.props.timeline === null) {
                 return <div />;
             }

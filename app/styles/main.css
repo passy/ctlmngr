@@ -133,3 +133,43 @@
 .dnd__item--placeholder {
     opacity: .4;
 }
+
+/* Bootstrap anti-selectivity crap overrides */
+
+.open .dropdown-menu {
+  display: block;
+}
+
+.open a {
+  outline: 0;
+}
+
+.navbar-nav .dropdown-menu {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.navbar-nav .navbar-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+
+.nav .navbar-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+
+.nav .navbar-item:hover,
+.nav .navbar-item:focus {
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav .navbar-item {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}

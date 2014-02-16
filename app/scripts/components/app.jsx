@@ -12,6 +12,7 @@ define(function (require) {
     var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
     var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
     var CMSaveStep = require('jsx!scripts/components/save_step.jsx?jsx');
+    var CMLoginMenu = require('jsx!scripts/components/login_menu.jsx?jsx');
     var WithMediator = require('components/with_mediator');
 
     return React.createClass({
@@ -32,6 +33,7 @@ define(function (require) {
 
         componentDidMount: function () {
             this.on('dataResolveCTL', this.handleTimelineResolved);
+            this.on('dataLogout', this.handleLogout);
         },
 
         setSession: function (session) {
@@ -114,18 +116,17 @@ define(function (require) {
             if (this.state.session) {
                 return (
                 <div className="cm-app">
-                    <div className="pull-right">
-                        <button className="btn btn-default btn-xs" onClick={this.handleLogout}>
-                            Logout @{this.state.session.screen_name}
-                        </button>
-                    </div>
+                    <CMLoginMenu session={this.state.session} />
                     <CMSelectCTLStep timeline={this.state.timeline} timelines={this.state.timelines} onSelect={this.handleSelect} />
                     <CMTimelineStep timeline={this.state.timeline} tweets={this.state.tweets} onSort={this.handleSort} />
                     <CMSaveStep timeline={this.state.timeline} tweets={this.state.tweets} />
                 </div>
                 );
             } else {
-                return <CMLoginButton session={this.state.session} />;
+                return <div className="cm-app">
+                    <CMLoginMenu session={this.state.session} />
+                    <CMLoginButton session={this.state.session} />
+                </div>;
             }
         }
     });

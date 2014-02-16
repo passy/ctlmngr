@@ -17,17 +17,12 @@ define(function (require) {
             var ctl = this.props.timelines[ctlKey];
             var classes = classSet({
                 'list-group-item': true,
-                'active': (
+                active: (
                     // We get the 'custom-' prefix that we cannot compare.
                     !_.isEmpty(this.props.selected) &&
                     ctlKey.indexOf(this.props.selected.id) === 7
                 )
             });
-            if (!_.isEmpty(this.props.selected)) {
-                console.log('id: ', this.props.selected.id);
-                console.log('ctlKey: ', ctlKey);
-                console.log();
-            }
             /*jshint camelcase:false */
             return (
                 <a

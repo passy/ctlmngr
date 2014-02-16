@@ -26,8 +26,6 @@
     });
 
     require(['bootstrap'], function (bootstrap) {
-        bootstrap(document.querySelector('.js-cm-app'), {
-            globalProgressBar: document.querySelector('.js-cm-global-progress-bar')
-        });
+        bootstrap(document.querySelector('.js-cm-app'));
     });
 }(window.require));

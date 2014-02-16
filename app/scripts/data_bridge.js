@@ -9,9 +9,29 @@ define(function (require) {
     }
 
     DataBridge.prototype.listen = function () {
+        this.mediator.subscribe('uiLogin', this.login.bind(this));
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
         this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
+    };
+
+    DataBridge.prototype.login = function () {
+        client.login();
+    };
+
+    DataBridge.prototype.login = function (data) {
+        client.logout().then(function () {
+            this.mediator.publish('dataLogout', {
+                key: data.key
+            });
+        }, function (e) {
+            this.mediator.publish('dataError', {
+                method: 'uiLogout',
+                status: e.status,
+                message: 'Logging out failed',
+                data: {}
+            });
+        }.bind(this)).done();
     };
 
     DataBridge.prototype.resolveCTL = function (data) {
