@@ -133,7 +133,7 @@ define(function (require) {
             return (
                 <section className="clearfix center-block dim-half-width">
                     <div className="panel panel-primary">
-                        <header className="panel-heading">Step 3: Save your Custom Timeline</header>
+                        <header className="panel-heading"><span className="rounded-number">3</span> Save your Custom Timeline</header>
                         <form className="l-marg-a-n" ref="form" onSubmit={this.handleSubmit}>
                             {this.renderProgress()}
                             {this.renderErrorModal()}

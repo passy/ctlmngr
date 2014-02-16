@@ -130,6 +130,16 @@
     background: transparent url(../images/signin.png) scroll no-repeat;
 }
 
+.rounded-number {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: .75em;
+    line-height: 1.5;
+    background-color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+}
+
 /* Custom image styles */
 
 .img-rounded {

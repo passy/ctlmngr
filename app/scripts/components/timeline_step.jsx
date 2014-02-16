@@ -29,7 +29,10 @@ define(function (require) {
             return (
                 <section className="clearfix center-block dim-half-width">
                     <div className="panel panel-primary">
-                        <header className="panel-heading">Step 2: Reorder your Tweets</header>
+                        <header className="panel-heading">
+                            <span className="rounded-number">2</span>
+                            Reorder your Tweets
+                        </header>
                         <div className="l-marg-a-n">
                             <Spinner loading={loading}>
                                 <SortableList
