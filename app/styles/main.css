@@ -76,6 +76,10 @@
     margin-right: 1em
 }
 
+.l-marg-a-n {
+    margin: 1em;
+}
+
 .l-marg-t-s {
     margin-top: .5em;
 }
@@ -100,6 +104,10 @@
 .l-marg-h-s {
     margin-left: .5em;
     margin-right: .5em
+}
+
+.l-marg-a-s {
+    margin: .5em;
 }
 
 /* Global states */

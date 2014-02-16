@@ -131,34 +131,35 @@ define(function (require) {
             });
 
             return (
-                <section className="clearfix">
-                    <form className="center-block dim-half-width" ref="form" onSubmit={this.handleSubmit}>
-                        <h2>Step 3: Save your Custom Timeline</h2>
-
-                        {this.renderProgress()}
-                        {this.renderErrorModal()}
-                        <div className={innerFormClasses}>
-                        <div className="input-group l-marg-b-n">
-                            <label className="radio-inline">
-                                <input name="saveType" type="radio" value="create" defaultChecked />Create New
-                            </label>
-                            <label className="radio-inline">
-                                <input name="saveType" type="radio" value="overwrite" />Overwrite
-                            </label>
-                        </div>
-                        <div className="input-group">
-                            <input ref="name"
-                                className="form-control"
-                                type="text"
-                                maxLength="25"
-                                placeholder="Name of your new Timeline"
-                                defaultValue={this.props.timeline.name} />
-                            <span className="input-group-btn">
-                                <button className="btn btn-default" type="submit">Save</button>
-                            </span>
-                        </div>
-                        </div>
-                    </form>
+                <section className="clearfix center-block dim-half-width">
+                    <div className="panel panel-primary">
+                        <header className="panel-heading">Step 3: Save your Custom Timeline</header>
+                        <form className="l-marg-a-n" ref="form" onSubmit={this.handleSubmit}>
+                            {this.renderProgress()}
+                            {this.renderErrorModal()}
+                            <div className={innerFormClasses}>
+                            <div className="input-group l-marg-b-n">
+                                <label className="radio-inline">
+                                    <input name="saveType" type="radio" value="create" defaultChecked />Create New
+                                </label>
+                                <label className="radio-inline">
+                                    <input name="saveType" type="radio" value="overwrite" />Overwrite
+                                </label>
+                            </div>
+                            <div className="input-group">
+                                <input ref="name"
+                                    className="form-control"
+                                    type="text"
+                                    maxLength="25"
+                                    placeholder="Name of your new Timeline"
+                                    defaultValue={this.props.timeline.name} />
+                                <span className="input-group-btn">
+                                    <button className="btn btn-default" type="submit">Save</button>
+                                </span>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
                 </section>
             );
         }

@@ -27,15 +27,19 @@ define(function (require) {
             }
 
             return (
-                <section className="center-block dim-half-width">
-                    <h2>Step 2: Reorder your Tweets</h2>
-                    <Spinner loading={loading}>
-                        <SortableList
-                            items={this.props.tweets}
-                            renderItem={this.renderTweet}
-                            onSort={this.props.onSort}>
-                        </SortableList>
-                    </Spinner>
+                <section className="clearfix center-block dim-half-width">
+                    <div className="panel panel-primary">
+                        <header className="panel-heading">Step 2: Reorder your Tweets</header>
+                        <div className="l-marg-a-n">
+                            <Spinner loading={loading}>
+                                <SortableList
+                                    items={this.props.tweets}
+                                    renderItem={this.renderTweet}
+                                    onSort={this.props.onSort}>
+                                </SortableList>
+                            </Spinner>
+                        </div>
+                    </div>
                 </section>
             );
         }
