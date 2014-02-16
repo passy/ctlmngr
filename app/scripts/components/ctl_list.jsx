@@ -3,7 +3,9 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
+    var _ = require('lodash');
     var TransitionGroup = React.addons.TransitionGroup;
+    var classSet = React.addons.classSet;
 
     return React.createClass({
         handleSelect: function (ctlKey, ctl, e) {
@@ -13,19 +15,36 @@ define(function (require) {
 
         renderCTLSelector: function (ctlKey) {
             var ctl = this.props.timelines[ctlKey];
+            var classes = classSet({
+                'list-group-item': true,
+                'active': (
+                    // We get the 'custom-' prefix that we cannot compare.
+                    !_.isEmpty(this.props.selected) &&
+                    ctlKey.indexOf(this.props.selected.id) === 7
+                )
+            });
+            if (!_.isEmpty(this.props.selected)) {
+                console.log('id: ', this.props.selected.id);
+                console.log('ctlKey: ', ctlKey);
+                console.log();
+            }
             /*jshint camelcase:false */
-            return <li key={ctlKey}>
-                <a href={ctl.custom_timeline_url} onClick={this.handleSelect.bind(null, ctlKey, ctl)}>
+            return (
+                <a
+                    key={ctlKey}
+                    className={classes}
+                    href={ctl.custom_timeline_url}
+                    onClick={this.handleSelect.bind(null, ctlKey, ctl)}>
                     {ctl.name} ({ctl.description})
                 </a>
-            </li>;
+            );
         },
 
         render: function () {
             if (Object.keys(this.props.timelines).length) {
                 return <div>
                     <p>Or select from the list below:</p>
-                    <TransitionGroup component={React.DOM.ul} transitionName="roll-in">
+                    <TransitionGroup className="list-group" component={React.DOM.div} transitionName="roll-in">
                         {Object.keys(this.props.timelines).map(this.renderCTLSelector)}
                     </TransitionGroup>
                 </div>;

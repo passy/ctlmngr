@@ -64,7 +64,10 @@ define(function (require) {
                             </span>
                         </div>
                         <div className="l-marg-t-n">
-                            <CMCTLList timelines={this.props.timelines} onSelect={this.handleSelect} />
+                            <CMCTLList
+                                timelines={this.props.timelines}
+                                selected={this.props.timeline}
+                                onSelect={this.handleSelect} />
                         </div>
                     </form>
                 </section>

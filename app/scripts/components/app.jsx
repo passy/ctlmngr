@@ -119,7 +119,7 @@ define(function (require) {
                             Logout @{this.state.session.screen_name}
                         </button>
                     </div>
-                    <CMSelectCTLStep timelines={this.state.timelines} onSelect={this.handleSelect} />
+                    <CMSelectCTLStep timeline={this.state.timeline} timelines={this.state.timelines} onSelect={this.handleSelect} />
                     <CMTimelineStep timeline={this.state.timeline} tweets={this.state.tweets} onSort={this.handleSort} />
                     <CMSaveStep timeline={this.state.timeline} tweets={this.state.tweets} />
                 </div>
