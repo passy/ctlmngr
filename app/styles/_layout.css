@@ -1,0 +1,26 @@
+/* Bootstrap Layout overrides */
+
+.navbar-twitter {
+    background-color: #00aced;
+    border-color: #00aced;
+
+    color: white;
+}
+
+.navbar-twitter a, .navbar-twitter a:hover {
+    color: white;
+}
+
+.navbar-twitter .nav .navbar-item:hover,
+.navbar-twitter .nav .navbar-item:focus,
+.navbar-twitter .nav .open .navbar-item {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+a {
+    color: #428bca;
+}
+
+a:hover {
+    color: #2a6496;
+}

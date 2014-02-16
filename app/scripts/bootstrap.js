@@ -31,7 +31,6 @@ define(function (require) {
             return;
         }
 
-        window.api = client;
         /*jshint camelcase:false */
         client.getCTLs({
             userId: userSession.user_id,
@@ -42,9 +41,8 @@ define(function (require) {
         });
     }
 
-    return function bootstrap(node, options) {
+    return function bootstrap(node) {
         var dataBridge = new DataBridge(mediator);
-        options = options || {};
         dataBridge.listen();
 
         start().then(loadCTLs).done();

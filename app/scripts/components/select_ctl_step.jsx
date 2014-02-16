@@ -53,9 +53,11 @@ define(function (require) {
 
         render: function () {
             return (
-                <section className="clearfix">
-                    <form className="center-block dim-half-width" onSubmit={this.handleSubmit}>
-                        <h2>Step 1: Select a Custom Tineline</h2>
+                <section className="clearfix center-block dim-half-width">
+                    <div className="panel panel-primary">
+                    <header className="panel-heading">Step 1: Select a Custom Tineline</header>
+
+                    <form className="l-marg-a-n" onSubmit={this.handleSubmit}>
                         {this.renderErrorModal()}
                         <div className="input-group">
                             <input ref="url" className="form-control" type="url" placeholder="Enter a Custom Timeline URL" />
@@ -64,9 +66,13 @@ define(function (require) {
                             </span>
                         </div>
                         <div className="l-marg-t-n">
-                            <CMCTLList timelines={this.props.timelines} onSelect={this.handleSelect} />
+                            <CMCTLList
+                                timelines={this.props.timelines}
+                                selected={this.props.timeline}
+                                onSelect={this.handleSelect} />
                         </div>
                     </form>
+                    </div>
                 </section>
             );
         }

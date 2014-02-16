@@ -4,28 +4,42 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ctlmngr</title>
-        <meta name="description" content="">
+        <meta name="description" content="A manager for Custom Twitter Timelines">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="bower_components/components-bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="bower_components/components-bootstrap/css/bootstrap-theme.css">
+        <link rel="stylesheet" href="bower_components/bootstrap-flatly/flatly.css">
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/_layout.css">
         <link rel="stylesheet" href="styles/_animation.css">
         <link rel="stylesheet" href="styles/_spinner.css">
     </head>
     <body>
+        <header class="navbar navbar-twitter navbar-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="navbar-brand">
+                        <img src="images/logo.svg" alt="ctlmngr logo">
+                        ctlmngr
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right js-cm-user-menu">
+                </ul>
+            </div>
+        </header>
         <div class="container">
-            <header class="page-header">
-                <h1>ctlmngr</h1>
-                <p class="lead">A manager for Custom Timelines</p>
-            </header>
             <main class="js-cm-app">
+                <div class="text-center">
+                    <div class="lea-spinner large"><div></div></div>
+
+                    <p>Preparing awesomeness &hellip;</p>
+                </div>
             </main>
 
             <footer class="page-footer">
                 Built with
                 <span class="txt-em--love">&lt;3</span>
                 by
-                <a href="http://passy.me/" target="_blank">@passy</a>
+                <a href="http://passy.me/" target="_blank">@passy</a><br>
+                Logo designed by <a href="http://thenounproject.com/term/move/26715/">Magnus Malmstedt</a>
             </footer>
         </div>
 

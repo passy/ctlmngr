@@ -3,15 +3,56 @@ define(function (require) {
     'use strict';
 
     var client = require('api').getDefaultInstance();
+    var Q = require('q');
+    var _ = require('lodash');
 
     function DataBridge(mediator) {
         this.mediator = mediator;
     }
 
     DataBridge.prototype.listen = function () {
+        this.mediator.subscribe('uiLogin', this.login.bind(this));
+        this.mediator.subscribe('uiLogout', this.logout.bind(this));
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
         this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
+        this.mediator.subscribe('uiUserInfo', this.getUserInfo.bind(this));
+    };
+
+    DataBridge.prototype.login = function () {
+        client.login();
+    };
+
+    DataBridge.prototype.logout = function (data) {
+        client.logout().then(function () {
+            this.mediator.publish('dataLogout', {
+                key: data.key
+            });
+        }.bind(this), function (e) {
+            this.mediator.publish('dataError', {
+                method: 'uiLogout',
+                status: e.status,
+                message: 'Logging out failed',
+                data: {}
+            });
+        }.bind(this)).done();
+    };
+
+    DataBridge.prototype.getUserInfo = function (data) {
+        client.getUser(data.id).then(
+            function (response) {
+            this.mediator.publish('dataUserInfo', {
+                key: data.key,
+                response: response
+            });
+        }.bind(this), function (e) {
+            this.mediator.publish('dataError', {
+                method: 'uiUserInfo',
+                status: e.status,
+                message: 'Fetching user information failed.',
+                data: data
+            });
+        }.bind(this)).done();
     };
 
     DataBridge.prototype.resolveCTL = function (data) {
@@ -66,17 +107,27 @@ define(function (require) {
      * Expects data.id in addition to what createCtl expects.
      */
     DataBridge.prototype.overwriteCTL = function (data) {
+        var promises = [];
+        var updates = _.pick(data, ['description', 'name']);
+
         function handleProgress(mediator, progress) {
-            console.log('Overwrite progress reported: ', progress);
             mediator.publish('dataOverwriteCTLProgress', progress);
         }
 
-        client.overwriteCTL(
+        promises.push(client.overwriteCTL(
             data.id, data.tweetIds, handleProgress.bind(this, this.mediator)
-        ).then(function (response) {
+        ));
+
+        if (!_.isEmpty(updates)) {
+            promises.push(client.updateCTL(data.id, updates));
+        }
+
+        // Execute both in parallel, but wait for them to finish before
+        // returning.
+        Q.all(promises).then(function (responses) {
             this.mediator.publish('dataOverwriteCTL', {
                 key: data.key,
-                response: response
+                response: responses[0]
             });
         }.bind(this), function (e) {
             this.mediator.publish('dataError', {

@@ -19,6 +19,26 @@
     margin: 40px 0 20px;
 }
 
+/* Navbar extension */
+.navbar-top {
+    border-radius: 0 !important;
+}
+
+/* Avatar */
+.user-avatar {
+    width: 2em;
+    border: 2px solid white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hover-zoom {
+    transition: transform 0.3s ease-in-out;
+}
+
+.hover-zoom:hover {
+    transform: scale(3);
+}
+
 /* Dimension helpers */
 .dim-half-width {
     width: 50%;
@@ -28,7 +48,7 @@
     width: 100%;
 }
 
-/* Layour helpers */
+/* Layout helpers */
 
 .l-marg-t-n {
     margin-top: 1em;
@@ -51,6 +71,45 @@
     margin-bottom: 1em
 }
 
+.l-marg-h-n {
+    margin-left: 1em;
+    margin-right: 1em
+}
+
+.l-marg-a-n {
+    margin: 1em;
+}
+
+.l-marg-t-s {
+    margin-top: .5em;
+}
+
+.l-marg-b-s {
+    margin-bottom: .5em;
+}
+
+.l-marg-l-s {
+    margin-left: .5em;
+}
+
+.l-marg-r-s {
+    margin-right: .5em;
+}
+
+.l-marg-v-s {
+    margin-top: .5em;
+    margin-bottom: .5em
+}
+
+.l-marg-h-s {
+    margin-left: .5em;
+    margin-right: .5em
+}
+
+.l-marg-a-s {
+    margin: .5em;
+}
+
 /* Global states */
 
 .s-disabled {
@@ -61,7 +120,7 @@
 
 /* Custom Buttons */
 
-.image-btn {
+.btn-image {
     border: none;
 }
 
@@ -71,8 +130,54 @@
     background: transparent url(../images/signin.png) scroll no-repeat;
 }
 
+/* Custom image styles */
+
+.img-rounded {
+    border-radius: 3px;
+}
+
 /* Drag and Drop */
 
 .dnd__item--placeholder {
     opacity: .4;
+}
+
+/* Bootstrap anti-selectivity crap overrides */
+
+.open .dropdown-menu {
+  display: block;
+}
+
+.open a {
+  outline: 0;
+}
+
+.navbar-nav .dropdown-menu {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.navbar-nav .navbar-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 20px;
+}
+
+.nav .navbar-item {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+
+.nav .navbar-item:hover,
+.nav .navbar-item:focus {
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav .navbar-item {
+      padding-top: 19.5px;
+      padding-bottom: 19.5px;
+  }
 }

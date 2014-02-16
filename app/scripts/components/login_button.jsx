@@ -3,9 +3,12 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var client = require('api').getDefaultInstance();
+    var mediator = require('mediator');
+    var withMediator = require('components/with_mediator');
 
     return React.createClass({
+        mixins: [withMediator(mediator)],
+
         getInitialState: function () {
             return {
                 session: null
@@ -15,13 +18,13 @@ define(function (require) {
         handleLogin: function (e) {
             e.preventDefault();
 
-            client.login();
+            this.trigger('uiLogin');
         },
 
         render: function () {
             return (
                 <form className="text-center" onSubmit={this.handleLogin}>
-                    <button className="image-btn cm-image-btn-sign-in" type="submit"></button>
+                    <button className="btn-image cm-image-btn-sign-in" type="submit"></button>
                 </form>
             );
         }
