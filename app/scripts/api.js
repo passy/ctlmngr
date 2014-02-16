@@ -48,7 +48,6 @@ define(function (require) {
                 'Content-Type': 'application/json'
             });
             options.data = JSON.stringify(options.json);
-
         } else if (options.form) {
             options.headers = _.assign(options.headers || {}, {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -198,6 +197,20 @@ define(function (require) {
             // Make sure that we return just the response in the end.
             return deferred.promise;
         });
+    };
+
+    /**
+     * Update the given properties on the CTL identified by ctlId.
+     */
+    Client.prototype.updateCTL = function (ctlId, props) {
+        return this.request(
+            '/1.1/beta/timelines/custom/update.json',
+            'POST', {
+                form: _.extend(props, {
+                    id: Client.normalizeCTLId(ctlId)
+                })
+            }
+        );
     };
 
     /**

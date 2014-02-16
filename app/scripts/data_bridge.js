@@ -3,6 +3,8 @@ define(function (require) {
     'use strict';
 
     var client = require('api').getDefaultInstance();
+    var Q = require('q');
+    var _ = require('lodash');
 
     function DataBridge(mediator) {
         this.mediator = mediator;
@@ -105,17 +107,27 @@ define(function (require) {
      * Expects data.id in addition to what createCtl expects.
      */
     DataBridge.prototype.overwriteCTL = function (data) {
+        var promises = [];
+        var updates = _.pick(data, ['description', 'name']);
+
         function handleProgress(mediator, progress) {
-            console.log('Overwrite progress reported: ', progress);
             mediator.publish('dataOverwriteCTLProgress', progress);
         }
 
-        client.overwriteCTL(
+        promises.push(client.overwriteCTL(
             data.id, data.tweetIds, handleProgress.bind(this, this.mediator)
-        ).then(function (response) {
+        ));
+
+        if (!_.isEmpty(updates)) {
+            promises.push(client.updateCTL(data.id, updates));
+        }
+
+        // Execute both in parallel, but wait for them to finish before
+        // returning.
+        Q.all(promises).then(function (responses) {
             this.mediator.publish('dataOverwriteCTL', {
                 key: data.key,
-                response: response
+                response: responses[0]
             });
         }.bind(this), function (e) {
             this.mediator.publish('dataError', {
