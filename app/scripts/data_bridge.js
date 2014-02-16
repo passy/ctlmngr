@@ -14,6 +14,7 @@ define(function (require) {
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
         this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
+        this.mediator.subscribe('uiUserInfo', this.getUserInfo.bind(this));
     };
 
     DataBridge.prototype.login = function () {
@@ -31,6 +32,23 @@ define(function (require) {
                 status: e.status,
                 message: 'Logging out failed',
                 data: {}
+            });
+        }.bind(this)).done();
+    };
+
+    DataBridge.prototype.getUserInfo = function (data) {
+        client.getUser(data.id).then(
+            function (response) {
+            this.mediator.publish('dataUserInfo', {
+                key: data.key,
+                response: response
+            });
+        }.bind(this), function (e) {
+            this.mediator.publish('dataError', {
+                method: 'uiUserInfo',
+                status: e.status,
+                message: 'Fetching user information failed.',
+                data: data
             });
         }.bind(this)).done();
     };

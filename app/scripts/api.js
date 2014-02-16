@@ -111,6 +111,18 @@ define(function (require) {
         return this.request('/');
     };
 
+    /**
+     * Get a full user info response based on their user id.
+     */
+    Client.prototype.getUser = function (id, params) {
+        /*jshint camelcase:false */
+        return this.request('/1.1/users/show.json', 'GET', {
+            params: _.extend({
+                id: id
+            }, params)
+        });
+    };
+
     Client.prototype.getCTLs = function (params) {
         return this.request('/1.1/beta/timelines/custom/list.json', 'GET', {
             params: params

@@ -26,8 +26,36 @@ define(function (require) {
 
         getInitialState: function () {
             return {
-                open: false
+                open: false,
+                avatar: 'https://pbs.twimg.com/profile_images/2284174872/7df3h38zabcvjylnyfe3_normal.png'
             };
+        },
+
+        componentDidMount: function () {
+            /*jshint camelcase:false */
+            this.on('dataUserInfo', function (data) {
+                this.setState({
+                    avatar: data.response.profile_image_url_https
+                });
+            }.bind(this), {
+                predicate: function (d) {
+                    return d.response.screen_name === this.props.session.screen_name;
+                }.bind(this)
+            });
+        },
+
+        componentWillReceiveProps: function (nextProps) {
+            /*jshint camelcase:false */
+
+            if ((!this.props.session && nextProps.session)||
+                 (this.props.session &&
+                  nextProps.session.screen_name !==
+                      this.props.session.screen_name)
+               ) {
+                this.trigger('uiUserInfo', {
+                    id: nextProps.session.user_id
+                });
+            }
         },
 
         handleLogin: function (e) {
@@ -67,12 +95,16 @@ define(function (require) {
                 <a href="#" className="navbar-item dropdown-toggle" onClick={this.handleToggleDropdown}>
                     <img
                         className="user-avatar hover-zoom img-rounded l-marg-r-s"
-                        src="https://pbs.twimg.com/profile_images/378800000537335374/78d58d698fc464e16d1d7e7314962118_bigger.jpeg"
+                        src={this.state.avatar}
                         alt="Avatar" />
-                    <span>{this.props.session.screen_name}</span>
+                    <span>@{this.props.session.screen_name}</span>
                     <b className="caret"></b>
                 </a>
                 <ul className="dropdown-menu">
+                    <li>
+                        <a href={'https://twitter.com/' + this.props.session.screen_name}
+                        target="_blank">Twitter Profile</a>
+                    </li>
                     <li><a href="#" onClick={this.handleLogout}>Logout</a></li>
                 </ul>
             </li>);

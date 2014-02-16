@@ -31,7 +31,6 @@ define(function (require) {
             return;
         }
 
-        window.api = client;
         /*jshint camelcase:false */
         client.getCTLs({
             userId: userSession.user_id,
