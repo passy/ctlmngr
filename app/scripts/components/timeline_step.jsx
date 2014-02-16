@@ -5,15 +5,7 @@ define(function (require) {
     var React = require('react');
     var SortableList = require('jsx!scripts/components/sortable_list.jsx?jsx');
     var Spinner = require('jsx!scripts/components/spinner.jsx?jsx');
-
-    var CMTweet = React.createClass({
-        render: function () {
-            // Make sure to follow display guidelines here.
-            return <div>
-                <blockquote>{this.props.tweet.text}</blockquote>
-            </div>;
-        }
-    });
+    var CMTweet = require('jsx!scripts/components/tweet.jsx?jsx');
 
     return React.createClass({
         renderTweet: function (tweet) {

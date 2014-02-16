@@ -66,6 +66,8 @@ define(function (require) {
                 return a.sort_index < b.sort_index;
             }).map(function (obj) {
                 return _.assign({ key: obj.id }, ctl.objects.tweets[obj.id]);
+            }).map(function (obj) {
+                return _.assign(obj, { user: ctl.objects.users[obj.user.id_str] });
             });
 
             var timeline = _.first(_.pairs(ctl.objects.timelines))[1];
