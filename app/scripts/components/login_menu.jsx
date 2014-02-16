@@ -5,6 +5,7 @@ define(function (require) {
     var withLayers = require('components/with_layers');
     var withMediator = require('components/with_mediator');
     var mediator = require('mediator');
+    var classSet = React.addons.classSet;
 
     // This is probably an utterly terrible idea, but I wanna see how this works
     // out. The point is that we need this outside of the DOM directly
@@ -23,6 +24,12 @@ define(function (require) {
             session: React.PropTypes.object
         },
 
+        getInitialState: function () {
+            return {
+                open: false
+            };
+        },
+
         handleLogin: function (e) {
             e.preventDefault();
 
@@ -35,23 +42,40 @@ define(function (require) {
             this.trigger('uiLogout');
         },
 
+        handleToggleDropdown: function (e) {
+            e.preventDefault();
+
+            this.setState({
+                open: !this.state.open
+            });
+        },
+
         renderLayer: function () {
             if (!this.props.session) {
-                return <a href="#" onClick={this.handleLogin}>Log in with Twitter</a>;
+                return <li>
+                    <a className="navbar-item" href="#" onClick={this.handleLogin}>Log in with Twitter</a>
+                </li>;
             }
-            return (<div>
-                <a href="#" className="navbar-item dropdown-toggle">
+
+            var dropDownClasses = classSet({
+                open: this.state.open,
+                dropdown: true
+            });
+
+            /*jshint camelcase:false */
+            return (<li className={dropDownClasses}>
+                <a href="#" className="navbar-item dropdown-toggle" onClick={this.handleToggleDropdown}>
                     <img
                         className="user-avatar hover-zoom img-rounded l-marg-r-s"
                         src="https://pbs.twimg.com/profile_images/378800000537335374/78d58d698fc464e16d1d7e7314962118_bigger.jpeg"
                         alt="Avatar" />
-                    <span>@horse_medium</span>
+                    <span>{this.props.session.screen_name}</span>
                     <b className="caret"></b>
                 </a>
                 <ul className="dropdown-menu">
                     <li><a href="#" onClick={this.handleLogout}>Logout</a></li>
                 </ul>
-            </div>);
+            </li>);
         },
 
         render: function () {

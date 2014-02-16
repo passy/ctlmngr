@@ -10,6 +10,7 @@ define(function (require) {
 
     DataBridge.prototype.listen = function () {
         this.mediator.subscribe('uiLogin', this.login.bind(this));
+        this.mediator.subscribe('uiLogout', this.logout.bind(this));
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
         this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
@@ -19,12 +20,12 @@ define(function (require) {
         client.login();
     };
 
-    DataBridge.prototype.login = function (data) {
+    DataBridge.prototype.logout = function (data) {
         client.logout().then(function () {
             this.mediator.publish('dataLogout', {
                 key: data.key
             });
-        }, function (e) {
+        }.bind(this), function (e) {
             this.mediator.publish('dataError', {
                 method: 'uiLogout',
                 status: e.status,

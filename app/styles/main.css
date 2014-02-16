@@ -169,7 +169,7 @@
 
 @media (min-width: 768px) {
   .navbar-nav .navbar-item {
-    padding-top: 15px;
-    padding-bottom: 15px;
+      padding-top: 19.5px;
+      padding-bottom: 19.5px;
   }
 }
