@@ -1,0 +1,29 @@
+@font-face {
+    font-family: "rosetta";
+    src: url("../fonts/rosetta.woff") format("woff");
+}
+
+.icon::before {
+    font-family: 'rosetta';
+    display: block;
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+    font-smoothing: antialiased;
+}
+
+.icon--favorite::before {
+    content: "\f147";
+}
+
+.icon--retweet::before {
+    content: "\f152";
+}
+
+.icon--follow::before {
+    content: "\f175";
+}
+
+.icon--reply::before {
+    content: "\f151";
+}
