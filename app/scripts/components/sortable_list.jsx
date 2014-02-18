@@ -6,6 +6,8 @@ define(function (require) {
     var classSet = React.addons.classSet;
 
     return React.createClass({
+        displayName: 'SortableList',
+
         getInitialState: function () {
             return {
                 dragged: -1,

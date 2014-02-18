@@ -3,6 +3,8 @@ define(function (require) {
     var React = require('react');
 
     return React.createClass({
+        displayName: 'Tweet',
+
         render: function () {
             var tweet = this.props.tweet;
 

@@ -8,6 +8,8 @@ define(function (require) {
     var CMTweet = require('jsx!scripts/components/tweet.jsx?jsx');
 
     return React.createClass({
+        displayName: 'CMTimelineStep',
+
         renderTweet: function (tweet) {
             return <CMTweet tweet={tweet} />;
         },

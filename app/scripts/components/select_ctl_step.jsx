@@ -8,6 +8,8 @@ define(function (require) {
     var ctlResolver = require('ctl_resolver');
 
     return React.createClass({
+        displayName: 'CMSelectCTLStep',
+
         getInitialState: function () {
             return {
                 error: null

@@ -5,6 +5,8 @@ define(function (require) {
     var WithLayers = require('components/with_layers');
 
     return React.createClass({
+        displayName: 'TWBSModal',
+
         mixins: [WithLayers(document.body)],
 
         propTypes: {

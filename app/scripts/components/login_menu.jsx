@@ -18,6 +18,8 @@ define(function (require) {
     var $endpoint = document.querySelector('.js-cm-user-menu');
 
     return React.createClass({
+        displayName: 'CMLoginMenu',
+
         mixins: [withMediator(mediator), withLayers($endpoint)],
 
         propTypes: {
@@ -47,8 +49,11 @@ define(function (require) {
         componentWillReceiveProps: function (nextProps) {
             /*jshint camelcase:false */
 
-            if ((!this.props.session && nextProps.session)||
-                 (this.props.session &&
+            // In simple words: If we didn't have a previous session but now
+            // have one OR we have a new one and the user changed, request user
+            // information.
+            if ((!this.props.session && nextProps.session) ||
+                 (this.props.session && nextProps.session &&
                   nextProps.session.screen_name !==
                       this.props.session.screen_name)
                ) {

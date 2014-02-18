@@ -7,6 +7,8 @@ define(function (require) {
     var withMediator = require('components/with_mediator');
 
     return React.createClass({
+        displayName: 'CMLoginButton',
+
         mixins: [withMediator(mediator)],
 
         getInitialState: function () {

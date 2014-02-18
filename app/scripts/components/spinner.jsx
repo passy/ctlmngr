@@ -5,6 +5,8 @@ define(function (require) {
     var classSet = React.addons.classSet;
 
     return React.createClass({
+        displayName: 'Spinner',
+
         getInitialProps: function () {
             return {
                 size: '' // Can also be 'small' or 'large'

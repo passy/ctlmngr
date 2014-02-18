@@ -16,6 +16,8 @@ define(function (require) {
     var WithMediator = require('components/with_mediator');
 
     return React.createClass({
+        displayName: 'CMApp',
+
         mixins: [WithMediator(mediator)],
 
         getInitialState: function () {
