@@ -22,7 +22,7 @@ define(function (require) {
             var url = this.refs.url.getDOMNode().value.trim();
 
             ctlResolver.resolveURL(url).then(
-                this.props.onSelect.bind(this),
+                this.props.onSelect,
                 function (e) {
                     this.setState({
                         error: e
