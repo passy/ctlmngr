@@ -27,7 +27,16 @@ define(function (require) {
                 </header>
                 <blockquote>{tweet.text}</blockquote>
                 <footer className="tweet__actions">
-                    <a href="#">
+                    <a href={'https://twitter.com/intent/tweet?in_reply_to=' + tweet.id_str}
+                        target="_blank">
+                        <i className="icon icon--reply" title="Reply" />
+                    </a>
+                    <a href={'https://twitter.com/intent/retweet?tweet_id=' + tweet.id_str}
+                        target="_blank">
+                        <i className="icon icon--retweet" title="Retweet" />
+                    </a>
+                    <a href={'https://twitter.com/intent/favorite?tweet_id=' + tweet.id_str}
+                        target="_blank">
                         <i className="icon icon--favorite" title="Favorite" />
                     </a>
                 </footer>
