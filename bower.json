@@ -3,7 +3,7 @@
   "description": "A manager for Twitter Custom Timelines",
   "version": "0.0.0",
   "dependencies": {
-    "react": "~0.8.0",
+    "react": "0.9.0-rc1",
     "requirejs": "~2.1.10",
     "require-jsx": "*",
     "q": "~1.0.0",
