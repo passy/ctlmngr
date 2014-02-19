@@ -5,7 +5,7 @@
 
 .icon::before {
     font-family: 'rosetta';
-    display: block;
+    display: inline-block;
     font-weight: normal;
     font-style: normal;
     text-align: center;

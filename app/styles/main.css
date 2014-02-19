@@ -146,6 +146,19 @@
     border-radius: 3px;
 }
 
+.tweet {
+    position: relative;
+}
+
+.tweet__action {
+    margin: 0 0.5em;
+}
+
+.tweet__main-action {
+    position: absolute;
+    right: 0;
+}
+
 /* Drag and Drop */
 
 .dnd__item--placeholder {
