@@ -9,24 +9,26 @@ define(function (require) {
             var tweet = this.props.tweet;
 
             /*jshint camelcase:false */
-            return <article className="tweet">
+            return <article className="tweet media">
                 <header className="tweet__header">
-                    <time className="tweet__time" dateTime={tweet.created_at}>
-                        {tweet.created_at}
-                    </time>
-                    <a target="_blank" href={'https://twitter.com/' + tweet.user.screen_name} rel="author">
-                        <div className="obj__left">
-                            <img className="tweet__avatar" src={tweet.user.profile_image_url_https} alt={'@' + tweet.user.screen_name + ' Avatar'} />
-                        </div>
+                    <a className="media" target="_blank" href={'https://twitter.com/' + tweet.user.screen_name} rel="author">
+                        <img className="pull-left tweet__avatar" src={tweet.user.profile_image_url_https} alt={'@' + tweet.user.screen_name + ' Avatar'} />
                         <b className="fullname">{tweet.user.name}</b>
+                        <time className="tweet__time pull-right" dateTime={tweet.created_at}>
+                            {tweet.created_at}
+                        </time>
                         <span className="screenname">
                             <span className="at">@</span>
                             {tweet.user.screen_name}
                         </span>
                     </a>
                 </header>
-                <blockquote>{tweet.text}</blockquote>
+                <blockquote className="media-body">{tweet.text}</blockquote>
                 <footer className="tweet__actions">
+                    <a href={'https://twitter.com/intent/user?screen_name=' + tweet.user.screen_name}
+                        target="_blank">
+                        <i className="icon icon--follow" title="Follow" />
+                    </a>
                     <a href={'https://twitter.com/intent/tweet?in_reply_to=' + tweet.id_str}
                         target="_blank">
                         <i className="icon icon--reply" title="Reply" />
