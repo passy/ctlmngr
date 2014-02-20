@@ -26,9 +26,11 @@ grunt build
 
 **API Proxy**
 
-You also need an API proxy. Why not use [twoxpy](http://github.com/passy/twoxpy)
-(in fact, I require a very specific URL schema, so everything else probably
-won't work without adjusting stuff)? By default it should listen on port 5000.
+You also need an API proxy. Why not use
+[twoxpy](http://github.com/passy/twoxpy)? (In fact, I require a very specific
+URL schema, so everything else probably won't work without adjusting stuff)? By
+default it should listen on port 5000. If you have the API set up somewhere
+else, you need to adjust `app/scripts/config.json`.
 
 ```bash
 git clone https://github.com/passy/twoxpy
