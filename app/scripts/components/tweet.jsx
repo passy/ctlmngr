@@ -23,14 +23,18 @@ define(function (require) {
             /*jshint camelcase:false */
             return <article className="tweet media l-marg-b-n">
                 <header className="tweet__header l-marg-b-s">
+                    <img className="tweet__avatar pull-left l-marg-r-n img-rounded"
+                        src={tweet.user.profile_image_url_https}
+                        alt={'@' + tweet.user.screen_name + ' Avatar'}
+                        width="48"
+                        height="48" />
                     <a className="media" target="_blank" href={'https://twitter.com/' + tweet.user.screen_name} rel="author">
-                        <img className="pull-left tweet__avatar img-rounded" src={tweet.user.profile_image_url_https} alt={'@' + tweet.user.screen_name + ' Avatar'} />
+                        <b className="fullname">{tweet.user.name}</b>
+                        <small className="screenname text-muted l-marg-l-n">
+                            <span className="at">@</span>
+                            {tweet.user.screen_name}
+                        </small>
                     </a>
-                    <b className="fullname">{tweet.user.name}</b>
-                    <small className="screenname text-muted l-marg-l-n">
-                        <span className="at">@</span>
-                        {tweet.user.screen_name}
-                    </small>
                     <a href={'https://twitter.com/intent/user?screen_name=' + tweet.user.screen_name}
                         target="_blank"
                         className="tweet__main-action btn btn-default btn-xs">
