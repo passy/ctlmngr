@@ -37,7 +37,7 @@ define(function (require) {
                     </a>
                     <a href={'https://twitter.com/intent/user?screen_name=' + tweet.user.screen_name}
                         target="_blank"
-                        className="tweet__main-action btn btn-default btn-xs">
+                        className="tweet__main-action btn btn-primary btn-xs">
                         <i className="icon icon--follow" title="Follow" /> Follow
                     </a>
                 </header>

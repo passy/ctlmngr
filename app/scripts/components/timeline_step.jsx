@@ -24,7 +24,7 @@ define(function (require) {
                 <section className="clearfix center-block dim-half-width">
                     <div className="panel panel-primary">
                         <header className="panel-heading">
-                            <span className="rounded-number">2</span>
+                            <span className="rounded-number l-marg-r-s">2</span>
                             Reorder your Tweets
                         </header>
                         <div className="l-marg-a-n">
