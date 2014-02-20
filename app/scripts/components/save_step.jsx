@@ -32,11 +32,21 @@ define(function (require) {
             this.on('dataError', this.handleDataError, { priority: 0 });
         },
 
+        getSaveTypeValue: function () {
+            return Array.prototype.slice.call(
+                this.refs.form.getDOMNode().saveType)
+            .reduce(function (a, b) {
+                if (b.checked) {
+                    return b.value;
+                }
+            });
+        },
+
         handleSubmit: function (e) {
             e.preventDefault();
-            var saveType = this.refs.form.getDOMNode().saveType.value;
 
             /*jshint camelcase:false */
+            var saveType = this.getSaveTypeValue();
             this.trigger(saveType === 'overwrite' ? 'uiOverwriteCTL' : 'uiCreateCTL', {
                 id: this.props.timeline.id,
                 name: this.refs.name.getDOMNode().value,
