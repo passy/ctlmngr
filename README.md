@@ -6,6 +6,9 @@ React.
 
 ![Screenshot](media/screenshot.png)
 
+**This is not officially supported or endorsed by Twitter. This is just me
+having fun.**
+
 Setup
 -----
 
@@ -23,7 +26,9 @@ grunt build
 
 **API Proxy**
 
-You also need an API proxy. Why not use [twoxpy](http://github.com/passy/twoxpy)? By default it should listen on port 5000.
+You also need an API proxy. Why not use [twoxpy](http://github.com/passy/twoxpy)
+(in fact, I require a very specific URL schema, so everything else probably
+won't work without adjusting stuff)? By default it should listen on port 5000.
 
 ```bash
 git clone https://github.com/passy/twoxpy
