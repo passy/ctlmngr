@@ -13,6 +13,7 @@ define(function (require) {
     DataBridge.prototype.listen = function () {
         this.mediator.subscribe('uiLogin', this.login.bind(this));
         this.mediator.subscribe('uiLogout', this.logout.bind(this));
+        this.mediator.subscribe('uiRefreshCTLs', this.refreshCTLs.bind(this));
         this.mediator.subscribe('uiResolveCTL', this.resolveCTL.bind(this));
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
         this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
@@ -137,6 +138,28 @@ define(function (require) {
                 data: data
             });
         }.bind(this)).done();
+    };
+
+    /**
+     * Refreshes all CTLs for the given `userId`.
+     */
+    DataBridge.prototype.refreshCTLs = function (data) {
+        client.getCTLs({
+            userId: data.userId,
+            sendErrorCodes: true
+        }).then(function (response) {
+            this.mediator.publish('dataCTLs', {
+                key: data.key,
+                response: response
+            });
+        }.bind(this), function (e) {
+            this.mediator.publish('dataError', {
+                method: 'refreshCTLs',
+                status: e.status,
+                message: 'Refreshing CTLs failed.',
+                data: data
+            });
+        });
     };
 
     return DataBridge;

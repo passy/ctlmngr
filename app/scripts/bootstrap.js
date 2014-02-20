@@ -26,26 +26,11 @@ define(function (require) {
         });
     }
 
-    function loadCTLs() {
-        if (!userSession) {
-            return;
-        }
-
-        /*jshint camelcase:false */
-        client.getCTLs({
-            userId: userSession.user_id,
-            sendErrorCodes: true
-        }).then(function (response) {
-            var timelines = (response && response.objects.timelines) || {};
-            cmApp.setTimelines(timelines);
-        });
-    }
-
     return function bootstrap(node) {
         var dataBridge = new DataBridge(mediator);
         dataBridge.listen();
 
-        start().then(loadCTLs).done();
+        start();
         React.renderComponent(cmApp, node);
 
         mediator.subscribe('dataError', function (e) {

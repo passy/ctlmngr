@@ -34,6 +34,7 @@ define(function (require) {
         },
 
         componentDidMount: function () {
+            this.on('dataCTLs', this.handleCTLsRefreshed);
             this.on('dataResolveCTL', this.handleTimelineResolved);
             this.on('dataLogout', this.handleLogout);
         },
@@ -41,6 +42,10 @@ define(function (require) {
         setSession: function (session) {
             this.setState({
                 session: session
+            });
+
+            this.trigger('uiRefreshCTLs', {
+                userId: session.user_id
             });
         },
 
@@ -52,6 +57,10 @@ define(function (require) {
             this.setState({
                 timelines: timelines
             });
+        },
+
+        handleCTLsRefreshed: function (data) {
+            this.setTimelines(data.response.objects.timelines);
         },
 
         // TODO: I think this should go through a URL change.
@@ -123,7 +132,7 @@ define(function (require) {
                     <CMLoginMenu session={this.state.session} />
                     <CMSelectCTLStep timeline={this.state.timeline} timelines={this.state.timelines} onSelect={this.handleSelect} />
                     <CMTimelineStep timeline={this.state.timeline} tweets={this.state.tweets} onSort={this.handleSort} />
-                    <CMSaveStep timeline={this.state.timeline} tweets={this.state.tweets} />
+                    <CMSaveStep timeline={this.state.timeline} tweets={this.state.tweets} session={this.state.session} />
                 </div>
                 );
             } else {

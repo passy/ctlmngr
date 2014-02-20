@@ -19,14 +19,16 @@ define(function (require) {
         getInitialState: function () {
             return {
                 saving: null,
-                error: null
+                error: null,
+                success: null
             };
         },
 
         componentDidMount: function () {
-            this.on('dataCreateCTL', this.handleCTLCreated);
-            // For now.
-            this.on('dataOverwriteCTL', this.handleCTLCreated);
+            this.on('dataCreateCTL', this.handleCTLSavedDecorator(
+                this.handleCTLCreated));
+            this.on('dataOverwriteCTL', this.handleCTLSavedDecorator(
+                this.handleCTLOverwritten));
             this.on('dataCreateCTLProgress', this.handleCTLProgress);
             this.on('dataOverwriteCTLProgress', this.handleCTLProgress);
             this.on('dataError', this.handleDataError, { priority: 0 });
@@ -59,14 +61,37 @@ define(function (require) {
             });
         },
 
-        handleCTLCreated: function () {
-            // TODO: Improve?
-            // Should refresh the timelines list.
+        handleCTLSavedDecorator: function (fn) {
+            return _.compose(function () {
+                this.setState({
+                    saving: null
+                });
+                this.trigger('uiRefreshCTLs', {
+                    /*jshint camelcase:false */
+                    userId: this.props.session.user_id
+                });
+            }.bind(this), fn);
+        },
 
+        handleCTLOverwritten: function () {
             this.setState({
-                saving: null
+                success: {
+                    // By definition, we keep the same URL.
+                    /*jshint camelcase:false */
+                    url: this.props.timeline.custom_timeline_url
+                }
             });
-            window.alert('CTL created. Better check TweetDeck if this actually worked.');
+        },
+
+        handleCTLCreated: function (data) {
+            // Sorry for this ...
+            var url = _.pluck(_.first(_.pairs(data.response.objects.timelines)),
+                              'custom_timeline_url')[1];
+            this.setState({
+                success: {
+                    url: url
+                }
+            });
         },
 
         handleCTLProgress: function (data) {
@@ -78,7 +103,6 @@ define(function (require) {
         handleDataError: function (data, channel) {
             channel.stopPropagation();
 
-            console.log('Setting error state.');
             this.setState({
                 error: data
             });
@@ -116,6 +140,25 @@ define(function (require) {
             </TwbsModal>;
         },
 
+        renderSuccessModal: function () {
+            var handleDismiss = function () {
+                this.setState({
+                    success: null
+                });
+            }.bind(this);
+
+            if (!this.state.success) {
+                return <span />;
+            }
+
+            return <TwbsModal
+                title="Your CTL is ready to rock!"
+                onRequestClose={handleDismiss}>
+                Your Custom Timeline has been saved. You can see the result here:<br />
+                <a href={this.state.success.url}>{this.state.success.url}</a>
+            </TwbsModal>;
+        },
+
         render: function () {
             // TODO: Description and option to overwrite existing
             if (_.isEmpty(this.props.timeline)) {
@@ -133,6 +176,7 @@ define(function (require) {
                         <form className="l-marg-a-n" ref="form" onSubmit={this.handleSubmit}>
                             {this.renderProgress()}
                             {this.renderErrorModal()}
+                            {this.renderSuccessModal()}
                             <div className={innerFormClasses}>
                             <div className="input-group l-marg-b-n">
                                 <label className="radio-inline">
@@ -160,5 +204,4 @@ define(function (require) {
             );
         }
     });
-
 });
