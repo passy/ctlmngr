@@ -1,9 +1,21 @@
 define(function (require) {
     'use strict';
     var React = require('react');
+    var twttr = require('twitter-text');
 
     return React.createClass({
         displayName: 'Tweet',
+
+        getTweetText: function () {
+            return twttr.txt.autoLinkWithJSON(
+                this.props.tweet.text, this.props.tweet.entities);
+        },
+
+        renderBody: function () {
+            return <div
+                className="tweet__body"
+                dangerouslySetInnerHTML={{__html: this.getTweetText()}}/>;
+        },
 
         render: function () {
             var tweet = this.props.tweet;
@@ -26,7 +38,7 @@ define(function (require) {
                     </a>
                 </header>
                 <div className="media-body">
-                    <div className="tweet__body">{tweet.text}</div>
+                    {this.renderBody()}
                     <footer className="tweet__footer">
                         <a href={'https://twitter.com/' + tweet.user.screen_name + '/status/' + tweet.id_str}
                             target="_blank">
