@@ -1,3 +1,4 @@
+/** @jsx React.DOM */
 define(function (require) {
     'use strict';
     var React = require('react');

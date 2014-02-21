@@ -2,7 +2,7 @@
 define(function (require) {
     'use strict';
 
-    var client = require('api').getDefaultInstance();
+    var client = require('./api').getDefaultInstance();
     var Q = require('q');
     var _ = require('lodash');
 

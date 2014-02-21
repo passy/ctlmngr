@@ -1,8 +1,9 @@
+/** @jsx React.DOM */
 define(function (require) {
     'use strict';
     var React = require('react');
     var classSet = React.addons.classSet;
-    var WithLayers = require('components/with_layers');
+    var WithLayers = require('./with_layers');
 
     return React.createClass({
         displayName: 'TWBSModal',

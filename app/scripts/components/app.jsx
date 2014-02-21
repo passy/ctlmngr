@@ -3,17 +3,18 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var client = require('api').getDefaultInstance();
     var _ = require('lodash');
 
-    var mediator = require('mediator');
-    var ctlResolver = require('ctl_resolver');
-    var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
-    var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
-    var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
-    var CMSaveStep = require('jsx!scripts/components/save_step.jsx?jsx');
-    var CMLoginMenu = require('jsx!scripts/components/login_menu.jsx?jsx');
-    var WithMediator = require('components/with_mediator');
+    var client = require('../api').getDefaultInstance();
+    var mediator = require('../mediator');
+    var ctlResolver = require('../ctl_resolver');
+
+    var CMLoginButton = require('./login_button.jsx');
+    var CMSelectCTLStep = require('./select_ctl_step.jsx');
+    var CMTimelineStep = require('./timeline_step.jsx');
+    var CMSaveStep = require('./save_step.jsx');
+    var CMLoginMenu = require('./login_menu.jsx');
+    var WithMediator = require('./with_mediator');
 
     return React.createClass({
         displayName: 'CMApp',

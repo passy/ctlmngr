@@ -3,11 +3,12 @@ define(function (require) {
     'use strict';
 
     var _ = require('lodash');
-    var mediator = require('mediator');
     var React = require('react');
-    var WithMediator = require('components/with_mediator');
-    var TwbsModal = require('jsx!scripts/components/twbs_modal.jsx?jsx');
-    var ProgressBar = require('jsx!scripts/components/progress_bar.jsx?jsx');
+
+    var mediator = require('../mediator');
+    var WithMediator = require('./with_mediator');
+    var TwbsModal = require('./twbs_modal.jsx');
+    var ProgressBar = require('./progress_bar.jsx');
 
     var classSet = React.addons.classSet;
 

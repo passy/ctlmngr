@@ -3,9 +3,10 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
-    var TwbsModal = require('jsx!scripts/components/twbs_modal.jsx?jsx');
-    var ctlResolver = require('ctl_resolver');
+
+    var CMCTLList = require('./ctl_list.jsx');
+    var TwbsModal = require('./twbs_modal.jsx');
+    var ctlResolver = require('../ctl_resolver');
 
     return React.createClass({
         displayName: 'CMSelectCTLStep',

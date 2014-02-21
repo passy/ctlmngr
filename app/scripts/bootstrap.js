@@ -3,10 +3,10 @@ define(function (require) {
 
     var React = require('react');
 
-    var API = require('api');
-    var CMApp = require('jsx!scripts/components/app.jsx?jsx');
-    var DataBridge = require('data_bridge');
-    var mediator = require('mediator');
+    var API = require('./api');
+    var CMApp = require('./components/app.jsx');
+    var DataBridge = require('./data_bridge');
+    var mediator = require('./mediator');
 
     var client = API.getDefaultInstance();
     var cmApp = new CMApp();

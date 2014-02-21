@@ -3,8 +3,8 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var mediator = require('mediator');
-    var withMediator = require('components/with_mediator');
+    var mediator = require('../mediator');
+    var withMediator = require('./with_mediator');
 
     return React.createClass({
         displayName: 'CMLoginButton',

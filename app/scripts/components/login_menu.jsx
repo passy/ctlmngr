@@ -1,10 +1,12 @@
+/** @jsx React.DOM */
 define(function (require) {
     'use strict';
 
     var React = require('react');
-    var withLayers = require('components/with_layers');
-    var withMediator = require('components/with_mediator');
-    var mediator = require('mediator');
+
+    var withLayers = require('./with_layers');
+    var withMediator = require('./with_mediator');
+    var mediator = require('../mediator');
     var classSet = React.addons.classSet;
 
     // This is probably an utterly terrible idea, but I wanna see how this works
