@@ -2,13 +2,28 @@ define(function (require) {
     'use strict';
     var React = require('react');
     var twttr = require('twitter-text');
+    var LRU = require('simple-lru');
+
+    // Totally arbitrary limit
+    var tweetCache = new LRU(256);
 
     return React.createClass({
         displayName: 'Tweet',
 
         getTweetText: function () {
-            return twttr.txt.autoLinkWithJSON(
-                this.props.tweet.text, this.props.tweet.entities);
+            /*jshint camelcase:false */
+            var id = this.props.tweet.id_str;
+            var body = tweetCache.get(id);
+
+            if (!body) {
+                body = twttr.txt.autoLinkWithJSON(
+                    this.props.tweet.text,
+                    this.props.tweet.entities);
+
+                tweetCache.set(id, body);
+            }
+
+            return body;
         },
 
         renderBody: function () {

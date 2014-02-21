@@ -13,11 +13,15 @@
             'lodash': '../bower_components/lodash/dist/lodash',
             'underscore.string': '../bower_components/underscore.string/lib/underscore.string',
             'mediator-js': '../bower_components/mediator-js/lib/mediator',
-            'twitter-text': '../bower_components/twitter-text/pkg/twitter-text-1.7.0'
+            'twitter-text': '../bower_components/twitter-text/pkg/twitter-text-1.7.0',
+            'simple-lru': '../bower_components/simple-lru/index'
         },
         shim: {
             'twitter-text': {
                 exports: 'twttr'
+            },
+            'simple-lru': {
+                exports: 'SimpleLRU'
             }
         }
     });
