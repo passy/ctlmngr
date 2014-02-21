@@ -10,16 +10,19 @@ module.exports = {
         publicPath: '/bundle/'
     },
     resolve: {
-        modulesDirectories: ['app/bower_components', 'node_modules'],
+        modulesDirectories: ['bower_components', 'node_modules'],
         alias: {
-            'lodash': __dirname + '/app/bower_components/lodash/dist/lodash',
-            'react': __dirname + '/app/bower_components/react/react-with-addons',
+            'lodash': __dirname + '/bower_components/lodash/dist/lodash',
+            'react': __dirname + '/bower_components/react/react-with-addons',
         }
+    },
+    stats: {
+        colors: true
     },
     module: {
         loaders: [
             {test: /\.jsx$/, loader: 'jsx-loader'},
-            {test: /\.json/, loader: 'json-loader'}
+            {test: /\.json$/, loader: 'json-loader'}
         ]
     }
 };

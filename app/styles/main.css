@@ -127,7 +127,7 @@
 .cm-image-btn-sign-in {
     width: 158px;
     height: 28px;
-    background: transparent url(../images/signin.png) scroll no-repeat;
+    background: transparent url('../images/signin.png') scroll no-repeat;
 }
 
 .rounded-number {

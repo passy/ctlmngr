@@ -1,28 +1,13 @@
 'use strict';
 
-require.config({
-    baseUrl: 'scripts/',
-    paths: {
-        'JSXTransformer': '../bower_components/react/JSXTransformer',
-        'jsx': '../bower_components/require-jsx/jsx',
-        'text': '../bower_components/requirejs-text/text',
-        'json': '../bower_components/requirejs-plugins/src/json',
-        'react': '../bower_components/react/react-with-addons',
-        'q': '../bower_components/q/q',
-        'underscore.string': '../bower_components/underscore.string/lib/underscore.string',
-        'mediator-js': '../bower_components/mediator-js/lib/mediator',
-        'twitter-text': '../bower_components/twitter-text/pkg/twitter-text-1.7.0',
-        'simple-lru': '../bower_components/simple-lru/index'
-    },
-    shim: {
-        'twitter-text': {
-            exports: 'twttr'
-        },
-        'simple-lru': {
-            exports: 'SimpleLRU'
-        }
-    }
-});
+
+require('style!css!bootstrap-flatly/flatly.css');
+
+require('style!css!../styles/main.css');
+require('style!css!../styles/_layout.css');
+require('style!css!../styles/_animation.css');
+require('style!css!../styles/_spinner.css');
+require('style!css!../styles/_icons.css');
 
 require(['lodash', 'underscore.string'], function (_, _s) {
     _.string = _s;

@@ -54,7 +54,7 @@ define(function (require) {
                     <a href={'https://twitter.com/intent/user?screen_name=' + tweet.user.screen_name}
                         target="_blank"
                         className="tweet__main-action btn btn-primary btn-xs">
-                        <i className="icon icon--follow" title="Follow" /> Follow
+                        <i className="icon icon--follow" title="Follow" /> FORX
                     </a>
                 </header>
                 <div className="media-body">
