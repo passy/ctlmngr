@@ -1,13 +1,13 @@
 'use strict';
 
 
-require('style!css!bootstrap-flatly/flatly.css');
+require('bootstrap-flatly/flatly.css');
 
-require('style!css!../styles/main.css');
-require('style!css!../styles/_layout.css');
-require('style!css!../styles/_animation.css');
-require('style!css!../styles/_spinner.css');
-require('style!css!../styles/_icons.css');
+require('../styles/main.css');
+require('../styles/_layout.css');
+require('../styles/_animation.css');
+require('../styles/_spinner.css');
+require('../styles/_icons.css');
 
 require(['lodash', 'underscore.string'], function (_, _s) {
     _.string = _s;

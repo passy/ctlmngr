@@ -9,7 +9,9 @@
     "webpack-dev-server": "^1.2.1",
     "gulp-util": "^2.2.14",
     "style-loader": "^0.6.2",
-    "raw-loader": "^0.5.1"
+    "raw-loader": "^0.5.1",
+    "file-loader": "^0.5.1",
+    "url-loader": "^0.5.3"
   },
   "dependencies": {
     "envify": "^1.2.0",

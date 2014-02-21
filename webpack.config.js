@@ -22,7 +22,12 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.jsx$/, loader: 'jsx-loader'},
-            {test: /\.json$/, loader: 'json-loader'}
+            {test: /\.json$/, loader: 'json-loader'},
+            {test: /\.css$/, loader: 'style-loader!css-loader'},
+            {test: /\.png$/, loader: 'url-loader?limit=100000&mimetype=image/png'},
+            {test: /\.jpg$/, loader: 'file-loader'},
+            {test: /\.woff$/, loader: 'url-loader?limit=100000&mimetype=application/font-woff'},
+            {test: /\.svg$/, loader: 'url-loader?limit=100000&mimetype=image/svg+xml'},
         ]
     }
 };

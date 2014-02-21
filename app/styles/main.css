@@ -19,6 +19,14 @@
     margin: 40px 0 20px;
 }
 
+.page-logo {
+    background: url('../images/logo.svg') transparent scroll no-repeat;
+    width: 48px;
+    height: 25px;
+    display: inline-block;
+    vertical-align: top;
+}
+
 /* Navbar extension */
 .navbar-top {
     border-radius: 0 !important;
