@@ -2,13 +2,12 @@
 
 
 module.exports = {
-    debug: true,
-    devtool: 'eval',
     context: __dirname + '/app',
     entry: './scripts/main.js',
     output: {
-        path: __dirname + '/app',
-        filename: 'bundle.js'
+        path: __dirname + '/app/bundle',
+        filename: 'bundle.js',
+        publicPath: '/bundle/'
     },
     resolve: {
         modulesDirectories: ['app/bower_components', 'node_modules'],

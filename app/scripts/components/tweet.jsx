@@ -17,7 +17,7 @@ define(function (require) {
             var body = tweetCache.get(id);
 
             if (!body) {
-                body = twttr.txt.autoLinkWithJSON(
+                body = twttr.autoLinkWithJSON(
                     this.props.tweet.text,
                     this.props.tweet.entities);
 
