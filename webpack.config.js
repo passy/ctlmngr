@@ -23,7 +23,7 @@ module.exports = {
         loaders: [
             {test: /\.jsx$/, loader: 'jsx-loader'},
             {test: /\.json$/, loader: 'json-loader'},
-            {test: /\.css$/, loader: 'style-loader!css-loader'},
+            {test: /\.css$/, loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 1 version'},
             {test: /\.png$/, loader: 'url-loader?limit=100000&mimetype=image/png'},
             {test: /\.jpg$/, loader: 'file-loader'},
             {test: /\.woff$/, loader: 'url-loader?limit=100000&mimetype=application/font-woff'},
