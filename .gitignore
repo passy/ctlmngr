@@ -1,5 +1,5 @@
 node_modules
-app/bower_components
+bower_components
 app/**/*/vendor
 dist
 .tmp
