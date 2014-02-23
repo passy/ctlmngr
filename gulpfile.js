@@ -27,7 +27,7 @@ gulp.task('images', function () {
 });
 
 gulp.task('clean', function () {
-    return gulp.src(['app/bundle', 'dist/'], { read: false })
+    return gulp.src(['app/bundle', 'dist/', '.tmp'], { read: false })
         .pipe($.clean());
 });
 
@@ -42,10 +42,31 @@ gulp.task('connect', $.connect.server({
     livereload: true
 }));
 
-gulp.task('scripts', function () {
+var jsxReplace = $.replace(/require\('jsx!/g, 'require(\'');
+
+gulp.task('scripts-precompile', function () {
+    return gulp.src('app/scripts/**/*.jsx')
+        .pipe($.react())
+        .pipe(jsxReplace)
+        .pipe(gulp.dest('.tmp/scripts/'));
+});
+
+gulp.task('scripts-copy', function () {
+    return gulp.src('app/scripts/**/*.{js,json}')
+        .pipe(jsxReplace)
+        .pipe(gulp.dest('.tmp/scripts/'));
+});
+
+gulp.task('scripts-bower', function () {
+    return gulp.src('app/bower_components/**')
+        .pipe(gulp.dest('.tmp/bower_components'));
+});
+
+gulp.task('scripts', ['scripts-bower', 'scripts-precompile', 'scripts-copy'], function () {
     $.requirejs({
-        baseUrl: 'app/scripts/',
+        baseUrl: '.tmp/scripts/',
         name: 'main',
+        mainConfigFile: '.tmp/scripts/main.js',
         out: 'main.js'
     })
     .pipe($.uglify({ outSourcemap: true }))
@@ -62,6 +83,6 @@ gulp.task('watch', ['connect'], function () {
     ], $.connect.reload);
 });
 
-gulp.task('build', ['clean', 'styles', 'images', 'copy-assets']);
+gulp.task('build', ['clean', 'styles', 'images', 'copy-assets', 'scripts']);
 
 gulp.task('default', ['build']);
