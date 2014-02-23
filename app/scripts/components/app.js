@@ -8,11 +8,11 @@ define(function (require) {
 
     var mediator = require('mediator');
     var ctlResolver = require('ctl_resolver');
-    var CMLoginButton = require('jsx!scripts/components/login_button.jsx?jsx');
-    var CMSelectCTLStep = require('jsx!scripts/components/select_ctl_step.jsx?jsx');
-    var CMTimelineStep = require('jsx!scripts/components/timeline_step.jsx?jsx');
-    var CMSaveStep = require('jsx!scripts/components/save_step.jsx?jsx');
-    var CMLoginMenu = require('jsx!scripts/components/login_menu.jsx?jsx');
+    var CMLoginButton = require('jsx!components/login_button.js');
+    var CMSelectCTLStep = require('jsx!components/select_ctl_step.js');
+    var CMTimelineStep = require('jsx!components/timeline_step.js');
+    var CMSaveStep = require('jsx!components/save_step.js');
+    var CMLoginMenu = require('jsx!components/login_menu.js');
     var WithMediator = require('components/with_mediator');
 
     return React.createClass({

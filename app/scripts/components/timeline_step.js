@@ -3,9 +3,9 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var SortableList = require('jsx!scripts/components/sortable_list.jsx?jsx');
-    var Spinner = require('jsx!scripts/components/spinner.jsx?jsx');
-    var CMTweet = require('jsx!scripts/components/tweet.jsx?jsx');
+    var SortableList = require('jsx!components/sortable_list');
+    var Spinner = require('jsx!components/spinner');
+    var CMTweet = require('jsx!components/tweet');
 
     return React.createClass({
         displayName: 'CMTimelineStep',

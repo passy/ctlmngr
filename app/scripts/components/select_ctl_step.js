@@ -3,8 +3,8 @@ define(function (require) {
     'use strict';
 
     var React = require('react');
-    var CMCTLList = require('jsx!scripts/components/ctl_list.jsx?jsx');
-    var TwbsModal = require('jsx!scripts/components/twbs_modal.jsx?jsx');
+    var CMCTLList = require('jsx!components/ctl_list');
+    var TwbsModal = require('jsx!components/twbs_modal');
     var ctlResolver = require('ctl_resolver');
 
     return React.createClass({
