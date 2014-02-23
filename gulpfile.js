@@ -31,7 +31,6 @@ gulp.task('clean', function () {
         .pipe($.clean());
 });
 
-
 gulp.task('copy-assets', function () {
     return gulp.src(['app/*.{html,ico,txt}', 'fonts/'])
         .pipe(gulp.dest('dist/'));
@@ -42,6 +41,16 @@ gulp.task('connect', $.connect.server({
     port: 9000,
     livereload: true
 }));
+
+gulp.task('scripts', function () {
+    $.requirejs({
+        baseUrl: 'app/scripts/',
+        name: 'main',
+        out: 'main.js'
+    })
+    .pipe($.uglify({ outSourcemap: true }))
+    .pipe(gulp.dest('dist/scripts'));
+});
 
 gulp.task('watch', ['connect'], function () {
     // Watch for changes in `app` folder
