@@ -9,7 +9,7 @@
     "underscore.string": "~2.3.3",
     "mediator-js": "~0.9.6",
     "prefixfree": "91790e8aff6d807cd62018479db2307e1972b92a",
-    "bootstrap-flatly": "663c6ccf6fca1bc5aa84313ef5585b8ad949ac90",
+    "bootstrap-flatly": "passy/bower-flatly#v3.1.0",
     "twitter-text": "~1.7.0",
     "simple-lru": "~0.0.2"
   }

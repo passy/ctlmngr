@@ -1,6 +1,5 @@
 'use strict';
 
-
 require('bootstrap-flatly/flatly.css');
 
 require('../styles/main.css');
