@@ -63,11 +63,16 @@ gulp.task('scripts-bower', function () {
 });
 
 gulp.task('scripts', ['scripts-bower', 'scripts-precompile', 'scripts-copy'], function () {
-    $.requirejs({
+    return $.requirejs({
         baseUrl: '.tmp/scripts/',
         name: 'main',
         mainConfigFile: '.tmp/scripts/main.js',
-        out: 'main.js'
+        out: 'main.js',
+        almond: true,
+        replaceRequireScript: [{
+            files: 'dist/index.html',
+            module: 'scripts/main'
+        }]
     })
     .pipe($.uglify({ outSourcemap: true }))
     .pipe(gulp.dest('dist/scripts'));
