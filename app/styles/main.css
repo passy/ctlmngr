@@ -1,3 +1,9 @@
+@import url('/bower_components/bootstrap-flatly/flatly.css');
+@import url('/styles/_layout.css');
+@import url('/styles/_animation.css');
+@import url('/styles/_spinner.css');
+@import url('/styles/_icons.css');
+
 /* Attribute overrides */
 
 [draggable] {
@@ -17,6 +23,14 @@
 .page-footer {
     padding-top: 9px;
     margin: 40px 0 20px;
+}
+
+.page-logo {
+    background: url('../images/logo.svg') transparent scroll no-repeat;
+    width: 48px;
+    height: 25px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 /* Navbar extension */
@@ -127,7 +141,7 @@
 .cm-image-btn-sign-in {
     width: 158px;
     height: 28px;
-    background: transparent url(../images/signin.png) scroll no-repeat;
+    background: transparent url('../images/signin.png') scroll no-repeat;
 }
 
 .rounded-number {
