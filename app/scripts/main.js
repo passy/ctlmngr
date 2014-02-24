@@ -16,6 +16,9 @@
             'twitter-text': '../bower_components/twitter-text/pkg/twitter-text-1.7.0',
             'simple-lru': '../bower_components/simple-lru/index'
         },
+        jsx: {
+            extension: 'jsx'
+        },
         shim: {
             'twitter-text': {
                 exports: 'twttr'
