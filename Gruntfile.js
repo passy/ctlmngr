@@ -46,6 +46,30 @@ module.exports = function (grunt) {
             ]
         },
 
+        copy: {
+            tmp: {
+                options: {
+                    nonull: true,
+                    process: function (content) {
+                        return content.replace(/jsx!/g, '');
+                    },
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'app/',
+                    src: ['**'],
+                    dest: '_tmp/'
+                }]
+            }
+        },
+
+        react: {
+            dist: {
+
+
+            }
+        },
+
         reduce: {
             // Source folder
             root: 'app',
