@@ -6,8 +6,8 @@ define(function (require) {
     var mediator = require('mediator');
     var React = require('react');
     var WithMediator = require('components/with_mediator');
-    var TwbsModal = require('jsx!components/twbs_modal.js');
-    var ProgressBar = require('jsx!components/progress_bar.js');
+    var TwbsModal = require('jsx!components/twbs_modal');
+    var ProgressBar = require('jsx!components/progress_bar');
 
     var classSet = React.addons.classSet;
 

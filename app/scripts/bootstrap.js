@@ -4,7 +4,7 @@ define(function (require) {
     var React = require('react');
 
     var API = require('api');
-    var CMApp = require('jsx!components/app.js');
+    var CMApp = require('jsx!components/app');
     var DataBridge = require('data_bridge');
     var mediator = require('mediator');
 
