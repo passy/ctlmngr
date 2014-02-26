@@ -2,7 +2,7 @@ define(function (require) {
     'use strict';
 
     var Q = require('q');
-    var Config = require('json!config.json');
+    var Config = JSON.parse(require('text!config.json'));
     var _ = require('lodash');
 
     var READY_STATE_DONE = 4;
