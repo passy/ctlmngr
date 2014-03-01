@@ -20,6 +20,7 @@ grunt serve
 ```
 
 **Build**
+*[(currently broken)](https://github.com/passy/ctlmngr/issues/19)*
 ```
 grunt build
 ```
