@@ -18,6 +18,8 @@ define(function (require) {
         this.mediator.subscribe('uiCreateCTL', this.createCTL.bind(this));
         this.mediator.subscribe('uiOverwriteCTL', this.overwriteCTL.bind(this));
         this.mediator.subscribe('uiUserInfo', this.getUserInfo.bind(this));
+
+        this.mediator.subscribe('dataResolveCTLPartial', this.resolveCTL.bind(this));
     };
 
     DataBridge.prototype.login = function () {
@@ -56,15 +58,37 @@ define(function (require) {
         }.bind(this)).done();
     };
 
+    function mergeCTLResponses(oldCTL, newCTL) {
+        return newCTL ? _.merge(newCTL, {
+            objects: oldCTL.objects
+        }) : oldCTL;
+    }
+
     DataBridge.prototype.resolveCTL = function (data) {
-        client.getCTL(data.id, {
+        var options = {
             include_cards: 1,
             send_error_codes: 1,
             include_entites: 1
-        }).then(function (response) {
-            this.mediator.publish('dataResolveCTL', {
-                ctl: response
-            });
+        };
+
+        if (data.maxPosition) {
+            options.max_position = data.maxPosition;
+        }
+
+        client.getCTL(data.id, options).then(function (response) {
+            if (response.response.position.was_truncated) {
+                // Publish partial results so the UI can update, but handle them
+                // within this component.
+                this.mediator.publish('dataResolveCTLPartial', {
+                    ctl: response,
+                    id: data.id,
+                    maxPosition: response.response.position.min_position
+                });
+            } else {
+                this.mediator.publish('dataResolveCTL', {
+                    ctl: mergeCTLResponses(response, data.ctl)
+                });
+            }
         }.bind(this), function (e) {
             this.mediator.publish('dataError', {
                 method: 'resolveCTL',
