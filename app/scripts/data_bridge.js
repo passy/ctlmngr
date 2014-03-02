@@ -60,7 +60,12 @@ define(function (require) {
 
     function mergeCTLResponses(oldCTL, newCTL) {
         return newCTL ? _.merge(newCTL, {
-            objects: oldCTL.objects
+            objects: oldCTL.objects,
+            response: {
+                timeline: oldCTL.response.timeline
+            }
+        }, function (a, b) {
+            return _.isArray(a) ? a.concat(b) : undefined;
         }) : oldCTL;
     }
 
@@ -80,7 +85,7 @@ define(function (require) {
                 // Publish partial results so the UI can update, but handle them
                 // within this component.
                 this.mediator.publish('dataResolveCTLPartial', {
-                    ctl: response,
+                    ctl: mergeCTLResponses(response, data.ctl),
                     id: data.id,
                     maxPosition: response.response.position.min_position
                 });
