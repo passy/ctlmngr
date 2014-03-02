@@ -7,9 +7,12 @@ define(function (require) {
 
     // Totally arbitrary limit
     var tweetCache = new LRU(256);
+    var WithPureRender = require('./with_pure_render');
 
     return React.createClass({
         displayName: 'Tweet',
+
+        mixins: [WithPureRender],
 
         getTweetText: function () {
             /*jshint camelcase:false */
