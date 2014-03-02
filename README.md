@@ -9,6 +9,13 @@ React.
 **This is not officially supported or endorsed by Twitter. This is just me
 having fun.**
 
+Demo
+----
+
+There is a demo at
+[https://ctlmngr.herokuapp.com](https://ctlmngr.herokuapp.com). You have to be
+whitelisted in order to use it for the time being.
+
 Setup
 -----
 
