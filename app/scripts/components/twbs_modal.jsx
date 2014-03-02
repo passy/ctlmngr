@@ -27,6 +27,11 @@ define(function (require) {
             });
         },
 
+        killClick: function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        },
+
         handleDismiss: function () {
             // when you click the background or the dismiss buttons, the user is
             // requesting that the modal gets closed.  note that the modal has
@@ -38,7 +43,8 @@ define(function (require) {
         renderButtons: function () {
             var renderPrimary = function () {
                 if (this.props.primaryButton) {
-                    return <button type="button" class="btn btn-primary">
+                    return <button type="button" class="btn btn-primary"
+                        onClick={this.props.onPrimaryClicked}>
                         {this.props.primaryButton}
                     </button>;
                 } else {
@@ -47,7 +53,7 @@ define(function (require) {
             }.bind(this);
 
             return <div>
-                <button type="button" className="btn btn-default">Close</button>
+                <button type="button" className="btn btn-default" onClick={this.handleDismiss}>Close</button>
                 {renderPrimary()}
             </div>;
         },
