@@ -16,11 +16,9 @@
     "grunt-contrib-copy": "^0.5.0"
   },
   "dependencies": {
-    "connect": "^2.13.0",
-    "bower": "^1.2.8"
+    "connect": "^2.13.0"
   },
   "scripts": {
-    "serve": "node --harmony server.js",
-    "postinstall": "node_modules/.bin/bower install"
+    "serve": "node --harmony server.js"
   }
 }
