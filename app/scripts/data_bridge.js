@@ -4,7 +4,6 @@ define(function (require) {
 
     var client = require('api').getDefaultInstance();
     var Q = require('q');
-    var _ = require('lodash');
 
     function DataBridge(mediator) {
         this.mediator = mediator;
@@ -58,17 +57,6 @@ define(function (require) {
         }.bind(this)).done();
     };
 
-    function mergeCTLResponses(oldCTL, newCTL) {
-        return newCTL ? _.merge(newCTL, {
-            objects: oldCTL.objects,
-            response: {
-                timeline: oldCTL.response.timeline
-            }
-        }, function (a, b) {
-            return _.isArray(a) ? a.concat(b) : undefined;
-        }) : oldCTL;
-    }
-
     DataBridge.prototype.resolveCTL = function (data) {
         var options = {
             include_cards: 1,
@@ -76,24 +64,10 @@ define(function (require) {
             include_entites: 1
         };
 
-        if (data.maxPosition) {
-            options.max_position = data.maxPosition;
-        }
-
         client.getCTL(data.id, options).then(function (response) {
-            if (response.response.position.was_truncated) {
-                // Publish partial results so the UI can update, but handle them
-                // within this component.
-                this.mediator.publish('dataResolveCTLPartial', {
-                    ctl: mergeCTLResponses(response, data.ctl),
-                    id: data.id,
-                    maxPosition: response.response.position.min_position
-                });
-            } else {
-                this.mediator.publish('dataResolveCTL', {
-                    ctl: mergeCTLResponses(response, data.ctl)
-                });
-            }
+            this.mediator.publish('dataResolveCTL', {
+                ctl: response
+            });
         }.bind(this), function (e) {
             this.mediator.publish('dataError', {
                 method: 'resolveCTL',

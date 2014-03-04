@@ -6,11 +6,25 @@ define(function (require) {
     var _ = require('lodash');
 
     var READY_STATE_DONE = 4;
+    var MAX_CURATE_SIZE = 100;
+
     var client;
 
     var Client = function (baseUrl) {
         this.baseUrl = baseUrl;
     };
+
+    function mergeCTLResponses(oldCTL, newCTL) {
+        return newCTL ? _.merge(newCTL, {
+            objects: oldCTL.objects,
+            response: {
+                timeline: oldCTL.response.timeline
+            }
+        }, function (a, b) {
+            return _.isArray(a) ? a.concat(b) : undefined;
+        }) : oldCTL;
+    }
+
 
     Client.getDefaultInstance = function () {
         if (!client) {
@@ -128,13 +142,41 @@ define(function (require) {
         });
     };
 
-    // https://api.twitter.com/1.1/beta/timelines/timeline.json?id=custom-41142710…clude_entities=1&include_user_entities=1&include_cards=1&send_error_codes=
-    Client.prototype.getCTL = function (id, params) {
+    /**
+     * Get a custom timeline, including *all* tweets in it.
+     *
+     * @callback progressCallback progressCb - A partial response, possibly not
+     * containing all Tweets of the CTL.
+     *
+     * @param {string} id - CTL id
+     * @param {object} params - URL parameters
+     * @param {progressCallback} progressCb - Same as the resolved CTL, but
+     * potentially partial
+     *
+     * @returns {object} Promise over the raw CTL response.
+     */
+    Client.prototype.getCTL = function (id, params, progressCb, _response) {
         return this.request('/1.1/beta/timelines/timeline.json', 'GET', {
             params: _.extend({
                 id: Client.normalizeCTLId(id)
             }, params)
-        });
+        }).then(function (response) {
+            /*jshint camelcase:false */
+            if (_.isFunction(progressCb)) {
+                progressCb(response);
+            }
+
+            if (response.response.position.was_truncated) {
+                return this.getCTL(
+                    id,
+                    _.extend({}, params, { max_position: response.response.position.min_position }),
+                    progressCb,
+                    mergeCTLResponses(response, _response)
+                );
+            } else {
+                return mergeCTLResponses(response, _response);
+            }
+        }.bind(this));
     };
 
     /**
@@ -248,12 +290,26 @@ define(function (require) {
             return { op: op.op, tweet_id: op.tweetId };
         });
 
+        return this._batchCurateCTL(ctlId, ops);
+    };
+
+    Client.prototype._batchCurateCTL = function (ctlId, rawOps) {
+        var ops = rawOps.splice(0, MAX_CURATE_SIZE);
+
         return this.request(
-            '/1.1/beta/timelines/custom/curate.json', 'POST', { json: {
-                id: Client.normalizeCTLId(ctlId),
-                changes: ops
-            } }
-        );
+            '/1.1/beta/timelines/custom/curate.json',
+            'POST', {
+                json: {
+                    id: Client.normalizeCTLId(ctlId),
+                    changes: ops
+                }
+            }).then(function (result) {
+                if (rawOps.length) {
+                    return this._batchCurateCTL(ctlId, rawOps);
+                }
+
+                return result;
+            }.bind(this));
     };
 
 
