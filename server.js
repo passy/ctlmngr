@@ -13,12 +13,12 @@ const STATIC_OPTIONS = {
 };
 
 const app = connect()
-    .use(connect.static(STATIC_OPTIONS.root, STATIC_OPTIONS))
-    .use(connect.compress())
     .use(hood.hsts({
         maxAge: 31536000
     }))
     .use(hood.nosniff())
-    .use(hood.xframe());
+    .use(hood.xframe())
+    .use(connect.static(STATIC_OPTIONS.root, STATIC_OPTIONS))
+    .use(connect.compress());
 
 app.listen(process.env.PORT || 5000);
