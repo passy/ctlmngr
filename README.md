@@ -4,17 +4,21 @@ ctlmngr
 A manager for Custom Timelines and excuse to play around with Assetgraph and
 React.
 
-![Screenshot Step 1](media/screenshot_step1.png)
-![Screenshot Step 2](media/screenshot_step2.png)
-![Screenshot Step 3](media/screenshot_step3.png)
+[See it in action on YouTube](https://www.youtube.com/watch?v=aqwPdoHNHhU)
 
 **This is not officially supported or endorsed by Twitter. This is just me
 having fun.**
 
+
+Screenshots
+-----------
+
+<img align="left" width="240" src="media/screenshot_step1.png">
+<img align="left" width="240" src="media/screenshot_step2.png">
+<img align="left" width="240" src="media/screenshot_step3.png">
+
 Demo
 ----
-
-[See it in action on YouTube](https://www.youtube.com/watch?v=aqwPdoHNHhU)
 
 There is a demo at
 [https://ctlmngr.herokuapp.com](https://ctlmngr.herokuapp.com). Until the CTL
