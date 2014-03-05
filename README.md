@@ -13,9 +13,8 @@ having fun.**
 Screenshots
 -----------
 
-<img align="left" width="240" src="media/screenshot_step1.png">
-<img align="left" width="240" src="media/screenshot_step2.png">
-<img align="left" width="240" src="media/screenshot_step3.png">
+|<a href="https://raw.github.com/passy/ctlmngr/master/media/screenshot_step1.png"><img align="left" width="210" src="media/screenshot_step1.png"></a> | <a href="https://raw.github.com/passy/ctlmngr/master/media/screenshot_step1.png"><img align="left" width="210" src="media/screenshot_step2.png"></a> | <a href="https://raw.github.com/passy/ctlmngr/master/media/screenshot_step1.png"><img align="left" width="210" src="media/screenshot_step3.png"></a> |
+|:---:|:---:|:---:|
 
 Demo
 ----
