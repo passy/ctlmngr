@@ -129,10 +129,24 @@ define(function (require) {
             if (this.state.session) {
                 return (
                 <div className="cm-app">
-                    <CMLoginMenu session={this.state.session} />
-                    <CMSelectCTLStep timeline={this.state.timeline} timelines={this.state.timelines} onSelect={this.handleSelect} />
-                    <CMTimelineStep timeline={this.state.timeline} tweets={this.state.tweets} onSort={this.handleSort} />
-                    <CMSaveStep timeline={this.state.timeline} tweets={this.state.tweets} session={this.state.session} />
+                    <CMLoginMenu
+                        session={this.state.session} />
+
+                    <CMSelectCTLStep
+                        timeline={this.state.timeline}
+                        timelines={this.state.timelines}
+                        onSelect={this.handleSelect} />
+
+                    <CMTimelineStep
+                        timeline={this.state.timeline}
+                        tweets={this.state.tweets}
+                        onSort={this.handleSort}
+                        />
+
+                    <CMSaveStep
+                        timeline={this.state.timeline}
+                        tweets={this.state.tweets}
+                        session={this.state.session} />
                 </div>
                 );
             } else {

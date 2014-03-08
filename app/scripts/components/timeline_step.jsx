@@ -6,12 +6,27 @@ define(function (require) {
     var SortableList = require('jsx!components/sortable_list');
     var Spinner = require('jsx!components/spinner');
     var CMTweet = require('jsx!components/tweet');
+    var CMTimelineOptionsDropdown = require('jsx!components/timeline_options_dropdown');
 
     return React.createClass({
         displayName: 'CMTimelineStep',
 
         renderTweet: function (tweet) {
             return <CMTweet tweet={tweet} />;
+        },
+
+        handleFullSortRequested: function (direction) {
+            var sortFn = function (a, b) {
+                /*jshint camelcase:false */
+                var dateA = new Date(a.created_at);
+                var dateB = new Date(b.created_at);
+
+                return direction === 'asc' ? dateA > dateB : dateA < dateB;
+            };
+
+            this.props.onSort(
+                this.props.tweets.slice(0).sort(sortFn)
+            );
         },
 
         render: function () {
@@ -26,6 +41,9 @@ define(function (require) {
                         <header className="panel-heading">
                             <span className="rounded-number l-marg-r-s">2</span>
                             Reorder your Tweets
+                            <CMTimelineOptionsDropdown
+                                onSortRequested={this.handleFullSortRequested}
+                            />
                         </header>
                         <div className="l-marg-a-n">
                             <Spinner loading={loading}>

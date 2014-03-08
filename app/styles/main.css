@@ -124,6 +124,10 @@
     border: none;
 }
 
+.btn-transparent {
+    background: transparent;
+}
+
 .cm-image-btn-sign-in {
     width: 158px;
     height: 28px;
