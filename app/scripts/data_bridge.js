@@ -4,6 +4,7 @@ define(function (require) {
 
     var client = require('api').getDefaultInstance();
     var Q = require('q');
+    var _ = require('lodash');
 
     function DataBridge(mediator) {
         this.mediator = mediator;
