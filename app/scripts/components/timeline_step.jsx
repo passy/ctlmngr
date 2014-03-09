@@ -21,7 +21,10 @@ define(function (require) {
                 var dateA = new Date(a.created_at);
                 var dateB = new Date(b.created_at);
 
-                return direction === 'asc' ? dateA > dateB : dateA < dateB;
+                if (direction === 'asc') {
+                    return dateA - dateB;
+                }
+                return dateB - dateA;
             };
 
             this.props.onSort(
