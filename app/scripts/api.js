@@ -363,5 +363,17 @@ define(function (require) {
             } });
     };
 
+    /**
+     * Get a conversation from a tweet id
+     */
+    Client.prototype.getConversation = function (tweetId, params) {
+        /*jshint camelcase:false */
+        return this.request('/1.1/conversation/show.json', 'GET', {
+            params: _.extend({
+                id: tweetId
+            }, params)
+        });
+    };
+
     return Client;
 });
