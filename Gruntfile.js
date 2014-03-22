@@ -26,7 +26,14 @@ module.exports = function (grunt) {
                 files: [{
                     dot: true,
                     src: [
-                        '<%= yeoman.dist %>',
+                        '<%= yeoman.dist %>'
+                    ]
+                }]
+            },
+            tmp: {
+                files: [{
+                    dot: true,
+                    src: [
                         '_tmp'
                     ]
                 }]
@@ -168,7 +175,8 @@ module.exports = function (grunt) {
         'clean:dist',
         'copy',
         'react',
-        'reduce'
+        'reduce',
+        'clean:tmp'
     ]);
 
     grunt.registerTask('default', [
@@ -177,7 +185,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('serve', [
-        'clean:dist',
+        'clean',
         'connect:livereload',
         'watch'
     ]);
