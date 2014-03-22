@@ -7,7 +7,7 @@ const path = require('path');
 const hood = require('hood');
 
 const STATIC_OPTIONS = {
-    root: path.join(process.cwd(), 'app'),
+    root: path.join(process.cwd(), 'dist'),
     maxAge: 86400000,
     redirect: false
 };
