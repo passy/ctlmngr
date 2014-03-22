@@ -48,21 +48,27 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            tmp: {
+            notjs: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: 'app/',
+                    src: ['**', '!**/*.{jsx,js}'],
+                    dest: '_tmp/'
+                }]
+            },
+            jsx: {
                 options: {
                     nonull: true,
-                    process: function (content, snd) {
-                        if (/\.jsx?$/.test(snd)) {
-                            return content.replace(/jsx!/g, '');
-                        }
-                        return content;
+                    process: function (content) {
+                        return content.replace(/jsx!/g, '');
                     },
                 },
                 files: [{
                     expand: true,
                     dot: true,
                     cwd: 'app/',
-                    src: ['**'],
+                    src: ['**/*.{jsx,js}'],
                     dest: '_tmp/'
                 }]
             }
