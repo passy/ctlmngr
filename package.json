@@ -17,7 +17,8 @@
   },
   "dependencies": {
     "connect": "^2.13.0",
-    "hood": "^0.2.1"
+    "hood": "^0.2.1",
+    "st": "^0.3.2"
   },
   "scripts": {
     "serve": "node --harmony server.js"
