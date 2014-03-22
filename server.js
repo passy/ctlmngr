@@ -3,7 +3,8 @@
 'use strict';
 
 const connect = require('connect');
-var st = require('st');
+const st = require('st');
+const strftime = require('strftime');
 const path = require('path');
 const hood = require('hood');
 
@@ -17,7 +18,9 @@ const STATIC_OPTIONS = {
 };
 
 function cacheHeaders(req, res, next) {
-    res.setHeader('Cache-Control', 'max-age=259200');
+    const exp = strftime('%a, %d %b %Y %H:%M:%S GMT',
+                (new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)));
+    res.setHeader('Expires', exp);
     next();
 }
 
@@ -25,9 +28,9 @@ const app = connect()
     .use(hood.hsts({
         maxAge: 31536000
     }))
+    .use(cacheHeaders)
     .use(hood.nosniff())
     .use(hood.xframe())
-    .use(cacheHeaders)
     .use(st(STATIC_OPTIONS));
 
 app.listen(process.env.PORT || 9000);
