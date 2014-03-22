@@ -16,12 +16,18 @@ const STATIC_OPTIONS = {
     }
 };
 
+function cacheHeaders(req, res, next) {
+    res.setHeader('Cache-Control', 'max-age=259200');
+    next();
+}
+
 const app = connect()
     .use(hood.hsts({
         maxAge: 31536000
     }))
     .use(hood.nosniff())
     .use(hood.xframe())
+    .use(cacheHeaders)
     .use(st(STATIC_OPTIONS));
 
 app.listen(process.env.PORT || 9000);
