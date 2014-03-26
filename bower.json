@@ -3,10 +3,10 @@
   "description": "A manager for Twitter Custom Timelines",
   "version": "0.0.0",
   "dependencies": {
-    "react": "~0.9.0",
+    "react": "~0.10.0",
     "requirejs": "~2.1.10",
     "require-jsx": "thomasboyt/require-jsx#6526031b7d9e8d047da69b27335e9d78a1eb7473",
-    "q": "~1.0.0",
+    "q": "~1.0.1",
     "requirejs-plugins": "~1.0.2",
     "requirejs-text": "~2.0.10",
     "lodash": "~2.4.1",
@@ -14,7 +14,7 @@
     "mediator-js": "~0.9.6",
     "prefixfree": "91790e8aff6d807cd62018479db2307e1972b92a",
     "bootstrap-flatly": "passy/bower-flatly#v3.1.0",
-    "twitter-text": "~1.8.0",
+    "twitter-text": "~1.9.0",
     "simple-lru": "~0.0.2"
   }
 }
