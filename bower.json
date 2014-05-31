@@ -1,6 +1,6 @@
 {
   "name": "ctlmngr",
-  "description": "A manager for Twitter Custom Timelines",
+  "description": "A manager for Twitter Collections, formerly Custom Timelines",
   "version": "0.0.0",
   "dependencies": {
     "react": "~0.10.0",

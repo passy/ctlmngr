@@ -1,8 +1,8 @@
 ctlmngr
 =======
 
-A manager for Custom Timelines and excuse to play around with Assetgraph and
-React.
+A manager for Collections (formerly Custom Timelines) and excuse to play around
+with Assetgraph and React.
 
 [See it in action on YouTube](https://www.youtube.com/watch?v=aqwPdoHNHhU)
 

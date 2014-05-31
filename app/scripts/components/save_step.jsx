@@ -154,7 +154,7 @@ define(function (require) {
             return <TwbsModal
                 title="Your CTL is ready to rock!"
                 onRequestClose={handleDismiss}>
-                Your Custom Timeline has been saved. You can see the result here:<br />
+                Your Collection has been saved. You can see the result here:<br />
                 <a href={this.state.success.url}>{this.state.success.url}</a>
             </TwbsModal>;
         },
@@ -172,7 +172,7 @@ define(function (require) {
             return (
                 <section className="clearfix center-block dim-half-width">
                     <div className="panel panel-primary">
-                        <header className="panel-heading"><span className="rounded-number l-marg-r-s">3</span> Save your Custom Timeline</header>
+                        <header className="panel-heading"><span className="rounded-number l-marg-r-s">3</span> Save your Collection</header>
                         <form className="l-marg-a-n" ref="form" onSubmit={this.handleSubmit}>
                             {this.renderProgress()}
                             {this.renderErrorModal()}

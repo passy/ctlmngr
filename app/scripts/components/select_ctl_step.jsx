@@ -47,8 +47,8 @@ define(function (require) {
             }.bind(this);
 
             return <TwbsModal onRequestClose={dismiss}
-                title="Invalid Custom Timeline Requested">
-                Could not resolve Custom Timeline.<br />
+                title="Invalid Collection Requested">
+                Could not resolve Collection.<br />
                 <strong>{this.state.error.message}</strong>
             </TwbsModal>;
         },
@@ -62,7 +62,7 @@ define(function (require) {
                     <form className="l-marg-a-n" onSubmit={this.handleSubmit}>
                         {this.renderErrorModal()}
                         <div className="input-group">
-                            <input ref="url" className="form-control" type="url" placeholder="Enter a Custom Timeline URL" />
+                            <input ref="url" className="form-control" type="url" placeholder="Enter a Collection URL" />
                             <span className="input-group-btn">
                                 <button className="btn btn-default" type="submit">Go!</button>
                             </span>
