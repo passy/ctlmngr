@@ -53,7 +53,7 @@ cd twoxpy
 virtualenv .ve
 . .ve/bin/activate
 pip install -r requirements.txt
-pip install honcho
+pip install honcho gunicorn
 $EDITOR .env # Set up API keys and stuff
 honcho start
 ```
