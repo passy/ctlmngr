@@ -3,6 +3,7 @@
 'use strict';
 
 const connect = require('connect');
+const utils = require('connect/lib/utils');
 const st = require('st');
 const strftime = require('strftime');
 const path = require('path');
@@ -24,7 +25,20 @@ function cacheHeaders(req, res, next) {
     next();
 }
 
+
+function requireHTTPS(req, res, next) {
+    if (req.headers['x-forwarded-proto'] === 'http') {
+        var target = 'https://' + req.headers['host'];
+
+        res.statusCode = 301;
+        res.setHeader('Location', target);
+        res.end('Redirecting to ' + utils.escape(target));
+    }
+    next();
+}
+
 const app = connect()
+    .use(requireHTTPS)
     .use(hood.hsts({
         maxAge: 31536000
     }))
