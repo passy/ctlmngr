@@ -57,7 +57,7 @@ define(function (require) {
             return (
                 <section className="clearfix center-block dim-half-width">
                     <div className="panel panel-primary">
-                    <header className="panel-heading"><span className="rounded-number l-marg-r-s">1</span> Select a Custom Tineline</header>
+                    <header className="panel-heading"><span className="rounded-number l-marg-r-s">1</span> Select a Collection</header>
 
                     <form className="l-marg-a-n" onSubmit={this.handleSubmit}>
                         {this.renderErrorModal()}
