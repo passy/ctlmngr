@@ -9,11 +9,10 @@ define(function (require) {
     var mediator = require('mediator');
 
     var client = API.getDefaultInstance();
-    var cmApp = new CMApp();
 
     var userSession;
 
-    function start() {
+    function start(cmApp) {
         return client.getSession().then(function (session) {
             userSession = session;
             cmApp.setSession(session);
@@ -28,10 +27,12 @@ define(function (require) {
 
     return function bootstrap(node) {
         var dataBridge = new DataBridge(mediator);
+        var cmApp;
+
         dataBridge.listen();
 
-        start();
-        React.renderComponent(cmApp, node);
+        cmApp = React.renderComponent(new CMApp(), node);
+        start(cmApp);
 
         mediator.subscribe('dataError', function (e) {
             console.error('Data error:', e);
