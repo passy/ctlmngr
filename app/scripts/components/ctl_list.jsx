@@ -23,6 +23,12 @@ define(function (require) {
                     ctlKey.indexOf(this.props.selected.id) === 7
                 )
             });
+
+            var name = ctl.name;
+            if (ctl.description) {
+                name += " (" + ctl.description + ")";
+            }
+
             /*jshint camelcase:false */
             return (
                 <a
@@ -30,7 +36,7 @@ define(function (require) {
                     className={classes}
                     href={ctl.custom_timeline_url}
                     onClick={this.handleSelect.bind(null, ctlKey, ctl)}>
-                    {ctl.name} ({ctl.description})
+                    {name}
                 </a>
             );
         },
