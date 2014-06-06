@@ -52,7 +52,6 @@ define(function (require) {
             this.trigger(saveType === 'overwrite' ? 'uiOverwriteCTL' : 'uiCreateCTL', {
                 id: this.props.timeline.id,
                 name: this.refs.name.getDOMNode().value,
-                description: 'Automatically created by ctlmngr',
                 tweetIds: this.props.tweets.map(function (x) { return x.id_str; })
             });
 
