@@ -1,5 +1,5 @@
 // Copied directly from the React master. Should be replaced as soon as this
-// lands in react-with-addons.
+// lands in react-with-addons. (Should be in with 0.11 or 1.0.)
 define(function () {
     'use strict';
 
