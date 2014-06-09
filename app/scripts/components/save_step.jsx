@@ -151,7 +151,7 @@ define(function (require) {
             }
 
             return <TwbsModal
-                title="Your CTL is ready to rock!"
+                title="Your Collection is ready to rock!"
                 onRequestClose={handleDismiss}>
                 Your Collection has been saved. You can see the result here:<br />
                 <a href={this.state.success.url}>{this.state.success.url}</a>
