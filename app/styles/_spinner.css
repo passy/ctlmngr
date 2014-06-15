@@ -4,6 +4,7 @@
  */
 
 @keyframes spin {
+    from {}
     to { transform: rotate(1turn); }
 }
 
@@ -16,7 +17,7 @@
     font-size: 12px;
     text-indent: 999em;
     overflow: hidden;
-    animation: spin 1s infinite steps(8);
+    animation: spin 1s steps(8) infinite;
 }
 
 .small.lea-spinner {
