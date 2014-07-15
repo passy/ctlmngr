@@ -20,8 +20,9 @@ Demo
 ----
 
 There is a demo at
-[https://ctlmngr.herokuapp.com](https://ctlmngr.herokuapp.com). Until the CTL
-API is public, you have to be whitelisted in order to log in. Sorry.
+[https://ctlmngr.herokuapp.com](https://ctlmngr.herokuapp.com). Until the
+collections API is public, you have to be whitelisted in order to log in.
+Sorry.
 
 Setup
 -----
