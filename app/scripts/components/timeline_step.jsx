@@ -35,7 +35,7 @@ define(function (require) {
         render: function () {
             var loading = this.props.tweets.length === 0;
             if (this.props.timeline === null) {
-                return <div />;
+                return null;
             }
 
             return (

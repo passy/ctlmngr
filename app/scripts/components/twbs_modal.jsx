@@ -48,7 +48,7 @@ define(function (require) {
                         {this.props.primaryButton}
                     </button>;
                 } else {
-                    return <span />;
+                    return null;
                 }
             }.bind(this);
 
@@ -60,7 +60,7 @@ define(function (require) {
 
         render: function () {
             // Rendering handled in layer
-            return <span />;
+            return null;
         },
 
         renderLayer: function () {

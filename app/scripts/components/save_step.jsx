@@ -109,8 +109,7 @@ define(function (require) {
 
         renderProgress: function () {
             if (!this.state.saving) {
-                // XXX: Is there a better pattern for this?
-                return <div />;
+                return null;
             }
 
             return <ProgressBar className="l-marg-v-n"
@@ -128,7 +127,7 @@ define(function (require) {
             }.bind(this);
 
             if (!this.state.error) {
-                return <span />;
+                return null;
             }
 
             return <TwbsModal
@@ -147,7 +146,7 @@ define(function (require) {
             }.bind(this);
 
             if (!this.state.success) {
-                return <span />;
+                return null;
             }
 
             return <TwbsModal
@@ -161,7 +160,7 @@ define(function (require) {
         render: function () {
             // TODO: Description and option to overwrite existing
             if (_.isEmpty(this.props.timeline)) {
-                return <div />;
+                return null;
             }
 
             var innerFormClasses = classSet({

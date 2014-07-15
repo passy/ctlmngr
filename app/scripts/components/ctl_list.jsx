@@ -50,7 +50,7 @@ define(function (require) {
                     </TransitionGroup>
                 </div>;
             } else {
-                return <div />;
+                return null;
             }
         }
     });

@@ -117,7 +117,7 @@ define(function (require) {
         },
 
         render: function () {
-            return <span />;
+            return null;
         }
     });
 });

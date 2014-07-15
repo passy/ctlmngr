@@ -37,7 +37,7 @@ define(function (require) {
 
         renderErrorModal: function () {
             if (!this.state.error) {
-                return <span />;
+                return null;
             }
 
             var dismiss = function () {

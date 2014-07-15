@@ -3,7 +3,7 @@
   "description": "A manager for Twitter Collections, formerly Custom Timelines",
   "version": "0.0.0",
   "dependencies": {
-    "react": "~0.10.0",
+    "react": "~0.11.0",
     "requirejs": "~2.1.10",
     "require-jsx": "thomasboyt/require-jsx#6526031b7d9e8d047da69b27335e9d78a1eb7473",
     "q": "~1.0.1",
