@@ -7,7 +7,7 @@ define(function (require) {
 
     // Totally arbitrary limit
     var tweetCache = new LRU(256);
-    var WithPureRender = require('./with_pure_render');
+    var WithPureRender = React.addons.PureRenderMixin;
 
     return React.createClass({
         displayName: 'Tweet',
