@@ -54,48 +54,9 @@ module.exports = function (grunt) {
             ]
         },
 
-        copy: {
-            notjs: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: 'app/',
-                    src: ['**', '!**/*.{jsx,js}'],
-                    dest: '_tmp/'
-                }]
-            },
-            jsx: {
-                options: {
-                    nonull: true,
-                    process: function (content) {
-                        return content.replace(/jsx!/g, '');
-                    },
-                },
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: 'app/',
-                    src: ['**/*.{jsx,js}'],
-                    dest: '_tmp/'
-                }]
-            }
-        },
-
-        react: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '_tmp',
-                    src: ['**/*.jsx'],
-                    dest: '_tmp',
-                    ext: '.js'
-                }]
-            }
-        },
-
         reduce: {
             // Source folder
-            root: '_tmp',
+            root: '<%= yeoman.app %>',
 
             // Build destination folder
             outRoot: '<%= yeoman.dist %>',
@@ -173,8 +134,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'copy',
-        'react',
         'reduce',
         'clean:tmp'
     ]);

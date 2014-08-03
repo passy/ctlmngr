@@ -5,7 +5,6 @@
   "dependencies": {
     "react": "~0.11.0",
     "requirejs": "~2.1.10",
-    "require-jsx": "thomasboyt/require-jsx#6526031b7d9e8d047da69b27335e9d78a1eb7473",
     "q": "~1.0.1",
     "requirejs-plugins": "~1.0.2",
     "requirejs-text": "~2.0.10",
