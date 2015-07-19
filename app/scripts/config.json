@@ -1,3 +1,3 @@
 {
-    "API_BASE": "https://sleepy-wildwood-6231.herokuapp.com/"
+    "API_BASE": "http://127.0.0.1:5000"
 }
